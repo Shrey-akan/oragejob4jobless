@@ -1,4 +1,5 @@
-<div class="container-fluid" style="margin-bottom: 15px; background-color: #007BFF; padding: 50px; border-bottom-left-radius: 50px;">
+<div class="container-fluid"
+    style="margin-bottom: 15px; background-color: #007BFF; padding: 50px; border-bottom-left-radius: 50px;">
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
@@ -48,33 +49,17 @@
         <div class="col-md-4 text-center section">
             <h2>Show Jobs by Location</h2>
             <div class="links">
-                <a [routerLink]="['/finjobpage', 'noida']">Noida</a>
-                <a [routerLink]="['/finjobpage', 'Saudi']">Saudi Arabia</a>
-
-
-
-                <!-- Add more location links with corresponding parameters -->
-
-                <a routerLink="/finjobpage">Qatar</a>
-                <a routerLink="/finjobpage">Kuwait</a>
-                <a routerLink="/finjobpage">Oman</a>
-                <a routerLink="/finjobpage">Bahrain</a>
-                <a routerLink="/finjobpage">Abu Dhabi</a>
-                <a routerLink="/finjobpage">Dubai</a>
-                <a routerLink="/finjobpage">Sharjah</a>
-                <a routerLink="/finjobpage">Riyadh</a>
-                <!-- Add more location links as needed -->
+                <a *ngFor="let location of data" [routerLink]="['/finjobpage', location.locationjob]">
+                    {{ location.locationjob }}
+                </a>
             </div>
         </div>
         <div class="col-md-5 text-center section">
             <h2>Show Jobs by Category</h2>
             <div class="links">
-                <a routerLink="/finjobpage">Java developer</a>
-                <a routerLink="/finjobpage">Accounts / Tax</a>
-                <a routerLink="/finjobpage">Banking / Financial Services</a>
-                <a routerLink="/finjobpage">Construction / Civil Engg</a>
-                <a routerLink="/finjobpage">HR / Industrial Relations</a>
-                <!-- Add more category links as needed -->
+                <a *ngFor="let location of data" [routerLink]="['/finjobpage', location.jobtitle]">
+                    {{ location.jobtitle }}
+                </a>
             </div>
         </div>
         <div class="col-md-2">
@@ -112,10 +97,10 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-2 hello text-center" style="padding: 15px;">
-            <a href="#" (click)="showContainer('jbfeed')">Job Feed</a>
+            <h2><a href="#" (click)="showContainer('jbfeed')">Job Feed</a></h2>
         </div>
         <div class="col-md-2 hello text-center" style="padding: 15px;">
-            <a href="#" (click)="showContainer('showsearches')">Job Searches</a>
+            <h2><a href="#" (click)="showContainer('showsearches')">Job Searches</a></h2>
         </div>
     </div>
 </div>
@@ -130,21 +115,38 @@
                 <div class="col-md-6 ">
                     <div class="custom-box clickable" style="margin: 10px 0px; border-radius: 20px;"
                         *ngFor="let job of data" (click)="selectJob(job)">
-                        <h4>{{ job.jobtitle }}</h4>
-                        <p>{{ job.companyforthisjob }}</p>
+                        <h2>{{ job.jobtitle }}</h2>
+                        <h3>{{ job.companyforthisjob }}</h3>
                         <!-- Display other relevant job information here -->
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="container custom-box" style="border-radius: 20px;" *ngIf="selectedJob">
-                        <h4>{{ selectedJob.jobtitle }}</h4>
-                        <p>{{ selectedJob.companyforthisjob }}</p>
+                        <h2>{{ selectedJob.jobtitle }}</h2>
+                        <h3>{{ selectedJob.companyforthisjob }}</h3>
                         <!-- <p>{{ selectedJob.location }}</p> -->
                         <button type="button" class="btn btn-primary" (click)="navigateToSignIn()">Apply Now</button>
                         <ul>
                             <!-- <li>{{ selectedJob.descriptiondata }}</li> -->
                         </ul>
                     </div>
+
+                    <div class="container custom-box" style="border-radius: 20px;" *ngIf="selectedJob">
+                        <h2>{{ selectedJob.jobtitle }}</h2>
+                        <h3>{{ selectedJob.companyforthisjob }}</h3>
+                        <h4><strong>Number of Openings:</strong> {{ selectedJob.numberofopening }}</h4>
+                        <h4><strong>Location:</strong> {{ selectedJob.locationjob }}</h4>
+                        <h4><strong>Job Type:</strong> {{ selectedJob.jobtype }}</h4>
+                        <h4><strong>Schedule:</strong> {{ selectedJob.schedulejob }}</h4>
+                        <h4><strong>Pay:</strong> {{ selectedJob.payjob }}</h4>
+                        <h4><strong>Pay Job Sup:</strong> {{ selectedJob.payjobsup }}</h4>
+                        <ul>
+                            <li *ngFor="let description of selectedJob.descriptiondata">{{ description }}</li>
+                        </ul>
+                    </div>
+                    
+
+
 
                 </div>
             </div>
@@ -200,7 +202,7 @@
         <!-- Main Content Column with Image -->
         <div class="col-md-6 text-center">
 
-            <img src="assets/Screenshot-2023-08-25-110628.png" alt="Your Image" class="card-img-top"
+            <img src="assets/logojob.png" alt="Your Image" class="card-img-top"
                 style="max-width: 20%; height: auto;">
             <div class="card-body">
                 <h2 class="card-title">Boost Your Job Hunt</h2>
@@ -247,17 +249,17 @@
             <div class="container">
                 <div class="row">
                     <h4>For Employers</h4>
-                    <p>Empower your team with integrated compensation data and technology solutions.</p>
+                    <p>Empower your team with automated hiring processes and build your team with top-tier talent.</p>
                 </div>
                 <div class="row">
                     <div class="container">
                         <div class="row concom">
                             <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                                <img src="assets/Applicant Tracking System (ATS).png" alt="">
                             </div>
                             <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                                <a href="/">Applicant Tracking System (ATS)</a>
+                                <p>Streamline your hiring processes with the help of ATS, which allows employers to manage job applications, schedule interviews, communicate with candidates, and track applicant status.</p>
                             </div>
                         </div>
                     </div>
@@ -266,11 +268,24 @@
                     <div class="container">
                         <div class="row concom">
                             <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                                <img src="assets/Analytics and Insights.png" alt="">
                             </div>
                             <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                                <a href="/">Analytics and Insights</a>
+                                <p>Make data-driven compensation decisions and optimize your job postings with our analytics tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class ="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Job Posting and Promotion.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">Job Posting and Promotion</a>
+                                <p>Create detailed job descriptions, specify job requirements, set desired qualifications, and promote job listings to reach a larger talent pool.</p>
                             </div>
                         </div>
                     </div>
@@ -279,11 +294,11 @@
                     <div class="container">
                         <div class="row concom">
                             <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                                <img src="assets/Talent Pool.png" alt="">
                             </div>
                             <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                                <a href="/">Talent Pool</a>
+                                <p>Build a vast pool of potential candidates and easily filter resumes and profiles by skills, experience, location, and more.</p>
                             </div>
                         </div>
                     </div>
@@ -292,24 +307,11 @@
                     <div class="container">
                         <div class="row concom">
                             <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                                <img src="assets/Sea of Opportunity.png" alt="">
                             </div>
                             <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="container">
-                        <div class="row concom">
-                            <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
-                            </div>
-                            <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                                <a href="/">Sea of Opportunity</a>
+                                <p>Attract top talent by showcasing a strong employer brand and aligning with your company's values and culture.</p>
                             </div>
                         </div>
                     </div>
@@ -318,10 +320,7 @@
                     <div class="container">
                         <div class="row">
                             <h4>It's Easy to Get Started</h4>
-                            <p>Transform compensation at your organization and get pay right — see how with a
-                                personalized demo.
-
-                            </p>
+                            <p>Transform your hiring processes and attract top talent — see how with a personalized demo.</p>
                         </div>
                         <div class="">
                             <button routerLink="/employer" class="btn btn-primary">SEE IT IN ACTION</button>
@@ -334,17 +333,30 @@
             <div class="container">
                 <div class="row">
                     <h4>For Employees</h4>
-                    <p>Empower your team with integrated compensation data and technology solutions.</p>
+                    <p>Simplify your job search with job alerts, resume building, detailed insights on your application process, and valuable resources.</p>
                 </div>
                 <div class="row">
                     <div class="container">
                         <div class="row concom">
                             <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                                <img src="assets/Sea of Opportunity.png" alt="">
                             </div>
                             <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                                <a href="/">Sea of Opportunity</a>
+                                <p>Get relevant search results with job alerts that notify you of new job listings matching your criteria.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Job Posting and Promotion.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">Job Posting and Promotion</a>
+                                <p>Create professional and compelling resumes with our resume builder tool.</p>
                             </div>
                         </div>
                     </div>
@@ -356,8 +368,21 @@
                                 <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
                             </div>
                             <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                                <a href="/">Application Tracking</a>
+                                <p>Track the status of your job applications, receive updates on your application progress, and see when your application was viewed and shortlisted for interviews.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Sea of Opportunity.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">Sea of Opportunity</a>
+                                <p>Gain valuable insights into a company's culture, work environment, and employee experiences through company reviews, ratings, and insights.</p>
                             </div>
                         </div>
                     </div>
@@ -369,34 +394,8 @@
                                 <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
                             </div>
                             <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="container">
-                        <div class="row concom">
-                            <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
-                            </div>
-                            <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="container">
-                        <div class="row concom">
-                            <div class="col-md-3">
-                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
-                            </div>
-                            <div class="col-md-9">
-                                <a href="/">CompAnalyst</a>
-                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                                <a href="/">Career Resources</a>
+                                <p>Access articles, blogs, and newsletters that provide valuable insights on resume writing, interview preparation, salary negotiation, and career growth for both job seekers and employers.</p>
                             </div>
                         </div>
                     </div>
@@ -405,10 +404,7 @@
                     <div class="container">
                         <div class="row">
                             <h4>It's Easy to Get Started</h4>
-                            <p>Transform compensation at your organization and get pay right — see how with a
-                                personalized demo.
-
-                            </p>
+                            <p>Simplify your job search and career development — see how with a personalized demo.</p>
                         </div>
                         <div class="">
                             <button routerLink="/login" class="btn btn-primary">GET START</button>
@@ -418,6 +414,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 <div class="container " style="border-radius: 25px; overflow: hidden;">

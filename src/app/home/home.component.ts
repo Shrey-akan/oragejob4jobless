@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  contactForm!: FormGroup;
-  constructor(private fb: FormBuilder , private b1:UserService,private router:Router) {}
   states: string[] = [
     'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',
     'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois',
@@ -21,6 +19,12 @@ export class HomeComponent implements OnInit {
     'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
     'West Virginia', 'Wisconsin', 'Wyoming'
   ];
+  visibleStates: string[] = this.states.slice(0, 9);
+  showAll: boolean = false;
+  contactForm!: FormGroup;
+  constructor(private fb: FormBuilder , private b1:UserService,private router:Router) {}
+
+  
  ngOnInit() {
   // Set the carousel to auto-play every 5 seconds
   this.runCarousel();
@@ -135,4 +139,13 @@ industries = [
   { name: 'Legal', logo: 'legal.png' },
   { name: 'Life, Physical, and Social Science', logo: 'life-science.png' },
 ];
+showAllStates() {
+  this.visibleStates = this.states.slice(0);
+  this.showAll = true;
+}
+
+showLessStates() {
+  this.visibleStates = this.states.slice(0, 9);
+  this.showAll = false;
+}
 }

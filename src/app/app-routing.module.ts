@@ -28,10 +28,8 @@ const routes: Routes = [
   {
     path: 'about', component: AboutComponent
   },
-  {
-    path: 'finjobpage/:locationjob',
-    component: FinjobpageComponent
-  },
+  { path: 'finjobpage/:locationjob', component: FinjobpageComponent },
+
   
   { path: 'finjobpage', component: FinjobpageComponent , pathMatch: 'full' },
   {

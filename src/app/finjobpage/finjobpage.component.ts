@@ -42,27 +42,29 @@ export class FinjobpageComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router, private b1: UserService,private route: ActivatedRoute) { }
+  constructor(private router: Router, private b1: UserService, private route: ActivatedRoute) { }
 
   selectJob(data: Job): void {
     this.selectedJob = data;
   }
-
   ngOnInit(): void {
-    let response = this.b1.fetchjobpost();
-    response.subscribe((data1: any) => {
-      this.data1 = data1;
-      // Initialize data with all jobs initially
-      this.data = data1;
-    });
-
     // Check if locationJob is provided in the route
     this.route.params.subscribe((params) => {
       this.locationJob = params['locationjob'];
       this.filterJobsByLocation();
     });
+
+    this.fetchJobData();
   }
 
+  fetchJobData() {
+    let response = this.b1.fetchjobpost();
+    response.subscribe((data1: any) => {
+      this.data1 = data1;
+      this.data = data1; // Set this.data to all jobs
+      this.filterJobsByLocation();
+    });
+  }
 
 
   navigateToSignIn() {
@@ -76,16 +78,26 @@ export class FinjobpageComponent implements OnInit {
     this.showTrending = !this.showTrending;
   }
 
-  filterJobsByLocation() {
-    console.log('Location Job:', this.locationJob); // Log the locationJob
-    if (!this.locationJob) {
-      // If no locationJob provided, show all jobs
-      this.jobs = this.data;
+filterJobsByLocation() {
+  if (this.locationJob) {
+    const filteredJobs = this.data.filter((job) => job.locationjob === this.locationJob || job.jobtitle.toLowerCase().includes(this.locationJob.toLowerCase()));
+    if (filteredJobs.length > 0) {
+      this.jobs = filteredJobs;
     } else {
-      console.log("inside else statement");
-      // Implement your filtering logic here based on locationJob
-      this.jobs = this.data.filter((job) => job.locationjob === this.locationJob);
+      this.showNoJobsFoundCard();
     }
+  } else {
+    this.showAllJobs();
   }
-  
+}
+
+
+
+  showAllJobs() {
+    this.jobs = this.data;
+  }
+  showNoJobsFoundCard() {
+    // Clear the existing job listings
+    this.jobs = [];
+  }
 }

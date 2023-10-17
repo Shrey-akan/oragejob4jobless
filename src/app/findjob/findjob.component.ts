@@ -73,9 +73,9 @@ export class FindjobComponent implements OnInit{
   selectedJob: Job | null = null;
   data: Job[] = [];
   images = [
-    'assets/Screenshot-2023-08-25-110628.png',
-    'assets/hello.png',
-    'assets/Screenshot-2023-08-25-110628.png',
+    'assets/07-image.jpg',
+    'assets/09-image.jpg',
+    'assets/01image.jpg',
     // Add more image URLs as needed
   ];
 

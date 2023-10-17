@@ -39,25 +39,6 @@ img{
     font-weight: bold;
     margin: 10px 0;
   }
-  .card-img-container {
-    overflow: hidden;
-    position: relative;
-    transition: transform 0.3s;
-  }
-  
-  .card-img-container img {
-    max-width: 100%;
-    height: auto;
-    transition: transform 0.3s;
-  }
-  
-  .card-img-container:hover {
-    transform: scale(1.1); /* Increase the scale to zoom in */
-  }
-  
-  .card-img-container:hover img {
-    transform: scale(1.1); /* Increase the scale to zoom in */
-  }
 
   
   .image-box {
@@ -102,4 +83,29 @@ img{
     opacity: 1;
   }
   
+  .state-text:hover {
+    color: red; /* Change the text color on hover */
+  }
+  
+  .btn:hover {
+    background-color: #ff6600; /* Change the background color of the buttons on hover */
+    border-color: #ff6600; /* Change the border color of the buttons on hover */
+    color: #fff; /* Change the text color of the buttons on hover */
+  }
+  .job-card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+    border: 1px solid #ccc; /* Add a border on hover */
+    transition: all 0.3s; /* Smooth transition effect */
+  }
+  
+  /* Make the job cards responsive */
+  @media (max-width: 767px) {
+    .col-md-3 {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+  .job-card {
+    height: 100%;
+  }
   
