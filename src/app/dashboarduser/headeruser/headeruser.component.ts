@@ -26,7 +26,7 @@ export class HeaderuserComponent implements OnInit {
   }
   logout() {
     // Make an HTTP POST request to your logout endpoint
-    this.http.post('https://job4jobless.com/logout', null).subscribe({
+    this.http.post('https://job4jobless.com:9001/logout', null).subscribe({
       next: (response: any) => {
         // Handle the successful logout response, e.g., navigate to a login page
         console.log('Logout successful', response);

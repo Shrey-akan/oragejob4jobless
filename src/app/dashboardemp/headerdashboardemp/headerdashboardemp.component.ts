@@ -24,7 +24,7 @@ export class HeaderdashboardempComponent implements OnInit {
   }
   logoutEmployer() {
     // Make an HTTP POST request to your logout endpoint
-    this.http.post('https://job4jobless.com/logoutEmployer', null).subscribe(
+    this.http.post('https://job4jobless.com:9001/logoutEmployer', null).subscribe(
       {
         next: (response: any) => {
           // Handle the successful logout response, e.g., navigate to a login page
