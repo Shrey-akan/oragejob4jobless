@@ -14,7 +14,7 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { JobPostService } from './job-post.service';
 
 // Define your API base URL as a constant variable
-const API_BASE_URL = 'http://localhost:9001/';
+const API_BASE_URL = 'https://job4jobless.com/';
 interface User {
   uid: Number;
   userName: String;
@@ -92,7 +92,7 @@ export class UserService {
   employerdetailsfetchurl = `${API_BASE_URL}fetchemployer`;
   employerupdateurl = `${API_BASE_URL}updateEmployee`;
   deleteemployeraccount = `${API_BASE_URL}`;
-  logincheckurlgmailemp=  `${API_BASE_URL}employerLoginCheck`;
+  logincheckurlgmailemp = `${API_BASE_URL}employerLoginCheck`;
   insertgmailemp = `${API_BASE_URL}createOrGetEmployer`;
   // Job Post
   inserturljobpost = `${API_BASE_URL}jobpostinsert`;
@@ -113,7 +113,7 @@ export class UserService {
   fetchquestionpaperurl = `${API_BASE_URL}fetchquestion`;
   // Check Answer URL
   checkalanswere = `${API_BASE_URL}checkallanswer`;
-  constructor(private h1: HttpClient,private jobPostService: JobPostService, private router: Router, private auth: Auth, public cookie: CookieService) { }
+  constructor(private h1: HttpClient, private jobPostService: JobPostService, private router: Router, private auth: Auth, public cookie: CookieService) { }
 
 
 
@@ -187,17 +187,22 @@ export class UserService {
         const mainres: User = resp;
         console.log(`Login response from server: ${mainres}`);
         this.cookie.set('user', resp.uid);
-        if (resp) {
-          console.log("Server responded with a object of user");
+
+        // Check if both accessToken and uid are present to determine authentication
+        const isAuthenticated = resp.accessToken && resp.uid;
+
+        if (isAuthenticated) {
+          localStorage.setItem('accessToken', resp.accessToken);
+          localStorage.setItem('uid', resp.uid);
+          console.log("Server responded with an object of the user");
 
           // Redirect to the dashboard if the response is true
-          alert('Login Successfull!');
-          this.router.navigate(['/dashboarduser/']);
+          alert('Login Successful!');
+          this.router.navigate(['/dashboarduser']);
         } else {
           // Handle other response statuses or errors
           alert('Incorrect Credentials!');
           this.router.navigate(['/login']);
-
         }
         console.log("Data checked");
       },
@@ -211,11 +216,11 @@ export class UserService {
 
   logincheckgmail(userName: string) {
     const data = { userName }; // Wrap the username in an object
-  
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-  
+
     this.h1.post(this.logincheckurlgmail, data, { headers }).subscribe({
       next: (resp: any) => {
         AuthInterceptor.accessToken = resp.accessToken;
@@ -223,32 +228,40 @@ export class UserService {
         const mainres: User = resp;
         console.log(`Login response from server: ${mainres}`);
         this.cookie.set('user', resp.uid);
-        if (resp && resp.accessToken) {
-          AuthInterceptor.accessToken = resp.accessToken;
-          console.log("Access Token Generated: " + resp.accessToken);
-          this.cookie.set('user', resp.uid);
+
+        // Check if both accessToken and uid are present to determine authentication
+        const isAuthenticated = resp.accessToken && resp.uid;
+
+        if (isAuthenticated) {
+          localStorage.setItem('accessToken', resp.accessToken);
+          localStorage.setItem('uid', resp.uid);
+          console.log("Server responded with an object of the user");
+
+          // Redirect to the dashboard if the response is true
           alert('Login Successful!');
-          this.router.navigate(['/dashboarduser/']);
+          this.router.navigate(['/dashboarduser']);
         } else {
-          alert('Login Failed. Your Google account is not registered.');
+          // Handle other response statuses or errors
+          alert('Incorrect Credentials!');
           this.router.navigate(['/login']);
         }
+        console.log("Data checked");
       },
       error: (err: any) => {
         console.log(err);
-        alert('Login Failed. Your Google account is not registered.');
+        alert('Incorrect Credentials!');
         this.router.navigate(['/login']);
       }
     });
   }
-  
-  createOrGetUser(userName: any){
+
+  createOrGetUser(userName: any) {
     const data = { userName }; // Wrap the username in an object
-  
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-  
+
     this.h1.post(this.insertgmail, userName, { headers }).subscribe({
       next: (resp: any) => {
         AuthInterceptor.accessToken = resp.accessToken;
@@ -256,24 +269,32 @@ export class UserService {
         const mainres: User = resp;
         console.log(`Login response from server: ${mainres}`);
         this.cookie.set('user', resp.uid);
-        if (resp && resp.accessToken) {
-          AuthInterceptor.accessToken = resp.accessToken;
-          console.log("Access Token Generated: " + resp.accessToken);
-          this.cookie.set('user', resp.uid);
-          alert('Account Created Successfull Successful!');
-          this.router.navigate(['/dashboarduser/']);
+
+        // Check if both accessToken and uid are present to determine authentication
+        const isAuthenticated = resp.accessToken && resp.uid;
+
+        if (isAuthenticated) {
+          localStorage.setItem('accessToken', resp.accessToken);
+          localStorage.setItem('uid', resp.uid);
+          console.log("Server responded with an object of the user");
+
+          // Redirect to the dashboard if the response is true
+          alert('Login Successful!');
+          this.router.navigate(['/dashboarduser']);
         } else {
-          alert('Login Failed. Your Google account is not registered.');
+          // Handle other response statuses or errors
+          alert('Incorrect Credentials!');
           this.router.navigate(['/login']);
         }
+        console.log("Data checked");
       },
       error: (err: any) => {
         console.log(err);
-        alert('Login Failed. Your Google account is not registered.');
+        alert('Incorrect Credentials!');
         this.router.navigate(['/login']);
       }
     });
-  }   
+  }
 
   //Employer
   deleteEmployer(empid: string): Observable<any> {
@@ -313,25 +334,29 @@ export class UserService {
 
     return this.h1.post(this.employercheckurl, data).subscribe({
       next: (resp: any) => {
+
         AuthInterceptor.accessToken = resp.accessToken;
+        console.log("Access Token Generated" + resp.accessToken);
         const mainres: Employer = resp;
-        console.log("emoployer");
         console.log(`Login response from server: ${mainres}`);
         this.cookie.set('emp', resp.empid);
 
-        console.log(resp.empfname);
-        if (resp) {
-          console.log("Server responded with a object of employer");
+        // Check if both accessToken and empid are present to determine authentication
+        const isAuthenticated = resp.accessToken && resp.empid;
+
+        if (isAuthenticated) {
+          localStorage.setItem('accessToken', resp.accessToken);
+          localStorage.setItem('empid', resp.empid);
+          console.log("Server responded with an object of employer");
 
           // Redirect to the dashboard if the response is true
-          alert('Login successful!');
+          alert('Login Successful!');
           this.router.navigate(['/dashboardemp']);
         } else {
           // Handle other response statuses or errors
           alert('Incorrect Credentials!');
           this.router.navigate(['/employer']);
         }
-
       },
       error: (err: any) => {
         console.log(err);
@@ -341,66 +366,37 @@ export class UserService {
     });
   }
 
-  createOrGetEmployer(empmailid: any){
+  createOrGetEmployer(empmailid: any) {
     const data = { empmailid }; // Wrap the username in an object
-  
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-  
+
     this.h1.post(this.insertgmailemp, empmailid, { headers }).subscribe({
       next: (resp: any) => {
         AuthInterceptor.accessToken = resp.accessToken;
         console.log("Access Token Generated" + resp.accessToken);
         const mainres: Employer = resp;
         console.log(`Login response from server: ${mainres}`);
-        this.cookie.set('Employer', resp.empid);
-        if (resp && resp.accessToken) {
-          AuthInterceptor.accessToken = resp.accessToken;
-          console.log("Access Token Generated: " + resp.accessToken);
-          this.cookie.set('emp', resp.empid);
-          console.log(resp.empid);
-          alert('Account Created Successfull Successful!');
-          this.router.navigate(['/dashboardemp/']);
-        } else {
-          alert('Login Failed. Your Google account is not registered.');
-          this.router.navigate(['/employer']);
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-        alert('Login Failed. Your Google account is not registered.');
-        this.router.navigate(['/employer']);
-      }
-    });
-  }   
-  employerLoginCheck(empmailid: string) {
-    const data = { empmailid }; // Wrap the username in an object
-  
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-  
-    this.h1.post(this.logincheckurlgmailemp, data, { headers }).subscribe({
-      next: (resp: any) => {
-            AuthInterceptor.accessToken = resp.accessToken;
-          console.log("Access Token Generated" + resp.accessToken);
-          const mainres: Employer = resp;
-          console.log(`Login response from server: ${mainres}`);
-          this.cookie.set('emp', resp.empid);
-          if (resp && resp.accessToken) {
-            AuthInterceptor.accessToken = resp.accessToken;
-            console.log("Access Token Generated: " + resp.accessToken);
-            this.cookie.set('user', resp.empid);
-            console.log("check the empid",resp.empid);
-            alert('Login Successful!');
+        this.cookie.set('emp', resp.empid);
+
+        // Check if both accessToken and empid are present to determine authentication
+        const isAuthenticated = resp.accessToken && resp.empid;
+
+        if (isAuthenticated) {
+          localStorage.setItem('accessToken', resp.accessToken);
+          localStorage.setItem('empid', resp.empid);
+          console.log("Server responded with an object of employer");
+
+          // Redirect to the dashboard if the response is true
+          alert('Login Successful!');
           this.router.navigate(['/dashboardemp']);
         } else {
           // Handle other response statuses or errors
           alert('Incorrect Credentials!');
           this.router.navigate(['/employer']);
         }
-
       },
       error: (err: any) => {
         console.log(err);
@@ -409,7 +405,46 @@ export class UserService {
       }
     });
   }
-  
+  employerLoginCheck(empmailid: string) {
+    const data = { empmailid }; // Wrap the username in an object
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.h1.post(this.logincheckurlgmailemp, data, { headers }).subscribe({
+      next: (resp: any) => {
+        AuthInterceptor.accessToken = resp.accessToken;
+        console.log("Access Token Generated" + resp.accessToken);
+        const mainres: Employer = resp;
+        console.log(`Login response from server: ${mainres}`);
+        this.cookie.set('emp', resp.empid);
+
+        // Check if both accessToken and empid are present to determine authentication
+        const isAuthenticated = resp.accessToken && resp.empid;
+
+        if (isAuthenticated) {
+          localStorage.setItem('accessToken', resp.accessToken);
+          localStorage.setItem('empid', resp.empid);
+          console.log("Server responded with an object of employer");
+
+          // Redirect to the dashboard if the response is true
+          alert('Login Successful!');
+          this.router.navigate(['/dashboardemp']);
+        } else {
+          // Handle other response statuses or errors
+          alert('Incorrect Credentials!');
+          this.router.navigate(['/employer']);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert('Incorrect Credentials!');
+        this.router.navigate(['/employer']);
+      }
+    });
+  }
+
 
 
   public insertemployer(data: any) {
@@ -466,8 +501,8 @@ export class UserService {
     console.log("done and check the data is coming or not ", data);
     return this.h1.post(this.inserturljobpost, data, { responseType: 'text' });
   }
-  
-  
+
+
 
   fetchjobpost() {
     return this.h1.get(this.fetchjobposturl);
@@ -549,11 +584,11 @@ export class UserService {
   public resumeinsert(data: any): Observable<any> {
     console.log(data);
     console.log("done");
-  
+
     return this.h1.post(this.insert_resumeurl, data);
   }
-  
-  
+
+
 
 
   //fetch question paper fetchquestionpaperurl

@@ -11,10 +11,12 @@ import { NotificationComponent } from '../dashboarduser/notification/notificatio
 import { NotificationempComponent } from './notificationemp/notificationemp.component';
 import { VideocallComponent } from './videocall/videocall.component';
 import { UpdatejobComponent } from './updatejob/updatejob.component';
+import { authGuard } from '../auth.guard';
 
 const routes: Routes = [
   {
     path: '', component: HeaderdashboardempComponent,
+    canActivate: [authGuard], 
     children: [
       {
         path: '', component: PostjobComponent

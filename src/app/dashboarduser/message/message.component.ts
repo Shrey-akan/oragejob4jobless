@@ -47,7 +47,7 @@ export class MessageComponent implements OnInit {
   fetchMessages() {
     const uniqueNames = new Set<string>();
 
-    this.http.get<SendMessage[]>('http://localhost:9001/fetchMessages').subscribe((messages: SendMessage[]) => {
+    this.http.get<SendMessage[]>('https://job4jobless.com/fetchMessages').subscribe((messages: SendMessage[]) => {
       this.messages = messages.filter((message) => {
         if (!uniqueNames.has(message.messageFrom)) {
           uniqueNames.add(message.messageFrom);
@@ -61,7 +61,7 @@ export class MessageComponent implements OnInit {
   }
 
   fetchMyMessages() {
-    this.http.get<SendMessage[]>('http://localhost:9001/fetchMessages').subscribe((messages: SendMessage[]) => {
+    this.http.get<SendMessage[]>('https://job4jobless.com/fetchMessages').subscribe((messages: SendMessage[]) => {
       this.filteredMessages = [];
       const uniqueMessageIds = new Set<string>();
 
@@ -89,7 +89,7 @@ export class MessageComponent implements OnInit {
     if (this.selectedUser && this.newMessage.trim() !== '') {
       const messageToSend = new SendMessage(this.selectedUser, this.abc, this.newMessage);
 
-      this.http.post<SendMessage>('http://localhost:9001/send', messageToSend).subscribe({
+      this.http.post<SendMessage>('https://job4jobless.com/send', messageToSend).subscribe({
         next: (response: SendMessage) => {
           this.newMessage = '';
           this.fetchMessages();

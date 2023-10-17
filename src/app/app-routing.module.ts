@@ -55,7 +55,8 @@ const routes: Routes = [
   },
   {
     path: 'dashboardemp',
-    loadChildren: () => import('./dashboardemp/dashboardemp.module').then(m => m.DashboardempModule)
+    loadChildren: () => import('./dashboardemp/dashboardemp.module').then(m => m.DashboardempModule),
+    canActivate: [authGuard]
   },
   {
     path: 'admin',

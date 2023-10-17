@@ -14,10 +14,12 @@ import { MyjobsComponent } from './myjobs/myjobs.component';
 import { QuestionpaperComponent } from './questionpaper/questionpaper.component';
 import { UpdateprofileComponent } from './updateprofile/updateprofile.component';
 import { VideocallComponent } from './videocall/videocall.component';
+import { authGuard } from '../auth.guard';
 
 const routes: Routes = [
   {
     path: '', component: HeaderuserComponent,
+    canActivate: [authGuard], 
     children: [
       {
         path: '', component: FindjobuComponent
