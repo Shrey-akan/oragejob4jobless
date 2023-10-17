@@ -1,0 +1,94 @@
+<div class="container text-center" style="margin-top: 50px;">
+    <div class="row">
+        <h1><strong>indeed</strong></h1>
+    </div>
+</div>
+<div class="container" id="jbfeed">
+    <div class="row">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6">
+                    <div class="custom-box clickable">
+                        <h1>Ready to take the next step?</h1>
+                        <p>Create an account or sign in.</p>
+                        <p>By creating an account or logging in, you understand and agree to Indeed's <a
+                                href="">Terms</a>. You also acknowledge our <a href="">Cookie</a> and <a
+                                href="">Privacy</a> policies. You will receive marketing messages from Indeed and may
+                            opt out at any time by following the unsubscribe link in our messages, or as detailed in our
+                            terms.
+                        </p>
+                        <div class="container">
+                            <div class="row">
+                                <button class="btn custom-button btn-lg btn-lg-responsive" (click)="loginWithGoogle()">
+                                    <i class="fab fa-google"></i> Sign In with Google
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="container" id="jbfeed">
+                            <div class="row">
+                                <div class="container">
+                                    <div class="row">
+
+                                        <div class="custom-box clickable">
+                                            <h1>Sign-In Employer</h1>
+
+                                            <div class="container">
+                                                <form [formGroup]="empsignin" (ngSubmit)="empCheckInfo()">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label for="empmailid1">Employer Name:</label>
+                                                            <input type="email" id="empmailid1"
+                                                                formControlName="empmailid" class="form-control"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="emppass1">Password:</label>
+                                                        <div class="input-group">
+                                                            <input type="{{ empPasswordVisible ? 'text' : 'password' }}"
+                                                                id="emppass1" formControlName="emppass"
+                                                                class="form-control" required />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text"
+                                                                    (click)="toggleEmpPasswordVisibility()"
+                                                                    style="cursor: pointer;">
+                                                                    <i class="fa"
+                                                                        [ngClass]="empPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <a routerLink="/employer/resetpass">Forgot password</a>
+                                                    </div>
+                                                    <div class="row">
+                                                        <button class="btn btn-primary">Sign-In</button>
+                                                    </div>
+                                                    <div class="row mt-4">
+                                                        <button type="submit" (click)="insertemp()"
+                                                            class="submit-button">Register</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

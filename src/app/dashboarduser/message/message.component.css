@@ -1,0 +1,79 @@
+/* Add this CSS to your existing CSS file or a separate CSS file */
+.user-list {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-list h3, .chat-messages h3 {
+  text-align: center;
+}
+
+.messageFrom {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: #d5e5f0;
+  transition: background-color 0.3s;
+}
+
+.messageFrom:hover {
+  background-color: #c1d8ea;
+}
+
+.chat-messages {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+.messages-list-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.sent {
+  background-color: #007bff;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.received {
+  background-color: #d5e5f0;
+  align-self: flex-start;
+}
+
+.send-message-form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-group {
+  flex-grow: 1;
+}
+
+
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}

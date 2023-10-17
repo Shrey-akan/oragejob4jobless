@@ -1,0 +1,597 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { ApplyJob } from 'src/app/apply-job';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
+import {
+  Auth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from '@angular/fire/auth';
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
+import { JobPostService } from './job-post.service';
+
+// Define your API base URL as a constant variable
+const API_BASE_URL = 'http://localhost:9001/';
+interface User {
+  uid: Number;
+  userName: String;
+  userFirstName: String;
+  userLastName: String;
+  userPassword: String;
+  companyuser: String;
+  websiteuser: String;
+  userphone: String;
+  usercountry: String;
+  userstate: String;
+  usercity: String;
+  profile: String;
+}
+interface Employer {
+  empid: Number;
+  empfname: String;
+  emplname: String;
+  empcompany: String;
+  empmailid: String;
+  emppass: String;
+  empphone: String;
+  empcountry: String;
+  empstate: String;
+  empcity: String;
+  descriptionemp: String;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  getUser() {
+    throw new Error('Method not implemented.');
+  }
+
+
+
+
+  private jobTitleSource = new BehaviorSubject<string | null>(null);
+  private companyNameSource = new BehaviorSubject<string | null>(null);
+
+  private empIdSource = new BehaviorSubject<string | null>(null);
+  empId$ = this.empIdSource.asObservable();
+
+  jobTitle$ = this.jobTitleSource.asObservable();
+  companyName$ = this.companyNameSource.asObservable();
+
+  setJobTitle(jobTitle: string) {
+    this.jobTitleSource.next(jobTitle);
+  }
+
+  setEmpId(empId: string) {
+    this.empIdSource.next(empId);
+  }
+
+  setCompanyName(companyName: string) {
+    this.companyNameSource.next(companyName);
+  }
+
+  contactformurl = `${API_BASE_URL}insertfrontform`;
+  inserturlc = `${API_BASE_URL}insertusermail`;
+  logincheckurl = `${API_BASE_URL}logincheck`;
+  logincheckurlgmail = `${API_BASE_URL}logincheckgmail`;
+  insertgmail = `${API_BASE_URL}createOrGetUser`;
+
+  fetchuserurl = `${API_BASE_URL}fetchuser`;
+  updateUserurl = `${API_BASE_URL}updateUser`;
+  insertusermailurl = `${API_BASE_URL}insertusermailgog`;
+  deleteuseraccount = `${API_BASE_URL}`;
+  // Employer
+  inserturle = `${API_BASE_URL}insertemployer`;
+  inserturlemail = `${API_BASE_URL}insertemployeremail`;
+  employercheckurl = `${API_BASE_URL}logincheckemp`;
+  employerdetailsfetchurl = `${API_BASE_URL}fetchemployer`;
+  employerupdateurl = `${API_BASE_URL}updateEmployee`;
+  deleteemployeraccount = `${API_BASE_URL}`;
+  logincheckurlgmailemp=  `${API_BASE_URL}employerLoginCheck`;
+  insertgmailemp = `${API_BASE_URL}createOrGetEmployer`;
+  // Job Post
+  inserturljobpost = `${API_BASE_URL}jobpostinsert`;
+  fetchjobposturl = `${API_BASE_URL}fetchjobpost`;
+  // Contact
+  inserturlcontact = `${API_BASE_URL}insertcontact`;
+  fetchcontactdetails = `${API_BASE_URL}fetchcontact`;
+  // Apply Job
+  inserturlapplyjob = `${API_BASE_URL}insertapplyjob`;
+  fetchapplyjobform = `${API_BASE_URL}fetchapplyform`;
+  // Notification
+  notificationurl = `${API_BASE_URL}insertnotification`;
+  fetchnotificationurl = `${API_BASE_URL}fetchnotify`;
+
+  // Resume Builder
+  insert_resumeurl = `${API_BASE_URL}resumeinsert`;
+  // Fetch Question
+  fetchquestionpaperurl = `${API_BASE_URL}fetchquestion`;
+  // Check Answer URL
+  checkalanswere = `${API_BASE_URL}checkallanswer`;
+  constructor(private h1: HttpClient,private jobPostService: JobPostService, private router: Router, private auth: Auth, public cookie: CookieService) { }
+
+
+
+
+  //Contact
+  insertfrontform(formData: any) {
+    return this.h1.post(this.contactformurl, formData);
+  }
+
+
+  //User 
+  public insertusermail(data: any) {
+    console.log("done");
+    return this.h1.post(this.inserturlc, data).subscribe({
+      next: (resp: any) => {
+
+        console.log(resp);
+
+        console.log("Data inserted");
+      },
+      error: (err: any) => {
+        console.log(err, "get the error");
+      }
+    });
+  }
+
+  insertusermailgog(data: string) {
+
+    console.log("inside user google login");
+
+    return this.h1.post(this.insertusermailurl, data).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        console.log("data inserted");
+      },
+      error: (err: any) => {
+        console.log(err, "get the error");
+      }
+    })
+  }
+  deleteUser(uid: string): Observable<any> {
+    const urldu = `${this.deleteuseraccount}/deleteUser/${uid}`;
+    return this.h1.delete(urldu);
+  }
+
+
+  fetchuser() {
+    return this.h1.get(this.fetchuserurl).pipe(catchError(this.handleError));
+  }
+
+
+  checkUser(userName: string): Observable<any> {
+    const url = `${API_BASE_URL}checkuser?userName=${userName}`;
+    return this.h1.get(url);
+  }
+
+
+  //update user
+  updateUser(data: any): Observable<any> {
+    return this.h1.post(this.updateUserurl, data).pipe(
+      catchError(this.handleEr)
+    );
+  }
+
+  public logincheck(data: any) {
+    console.log("done");
+    return this.h1.post(this.logincheckurl, data).subscribe({
+      next: (resp: any) => {
+        AuthInterceptor.accessToken = resp.accessToken;
+        console.log("Access Token Generated" + resp.accessToken);
+        const mainres: User = resp;
+        console.log(`Login response from server: ${mainres}`);
+        this.cookie.set('user', resp.uid);
+        if (resp) {
+          console.log("Server responded with a object of user");
+
+          // Redirect to the dashboard if the response is true
+          alert('Login Successfull!');
+          this.router.navigate(['/dashboarduser/']);
+        } else {
+          // Handle other response statuses or errors
+          alert('Incorrect Credentials!');
+          this.router.navigate(['/login']);
+
+        }
+        console.log("Data checked");
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert('Incorrect Credentials!');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
+  logincheckgmail(userName: string) {
+    const data = { userName }; // Wrap the username in an object
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    this.h1.post(this.logincheckurlgmail, data, { headers }).subscribe({
+      next: (resp: any) => {
+        AuthInterceptor.accessToken = resp.accessToken;
+        console.log("Access Token Generated" + resp.accessToken);
+        const mainres: User = resp;
+        console.log(`Login response from server: ${mainres}`);
+        this.cookie.set('user', resp.uid);
+        if (resp && resp.accessToken) {
+          AuthInterceptor.accessToken = resp.accessToken;
+          console.log("Access Token Generated: " + resp.accessToken);
+          this.cookie.set('user', resp.uid);
+          alert('Login Successful!');
+          this.router.navigate(['/dashboarduser/']);
+        } else {
+          alert('Login Failed. Your Google account is not registered.');
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert('Login Failed. Your Google account is not registered.');
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+  
+  createOrGetUser(userName: any){
+    const data = { userName }; // Wrap the username in an object
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    this.h1.post(this.insertgmail, userName, { headers }).subscribe({
+      next: (resp: any) => {
+        AuthInterceptor.accessToken = resp.accessToken;
+        console.log("Access Token Generated" + resp.accessToken);
+        const mainres: User = resp;
+        console.log(`Login response from server: ${mainres}`);
+        this.cookie.set('user', resp.uid);
+        if (resp && resp.accessToken) {
+          AuthInterceptor.accessToken = resp.accessToken;
+          console.log("Access Token Generated: " + resp.accessToken);
+          this.cookie.set('user', resp.uid);
+          alert('Account Created Successfull Successful!');
+          this.router.navigate(['/dashboarduser/']);
+        } else {
+          alert('Login Failed. Your Google account is not registered.');
+          this.router.navigate(['/login']);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert('Login Failed. Your Google account is not registered.');
+        this.router.navigate(['/login']);
+      }
+    });
+  }   
+
+  //Employer
+  deleteEmployer(empid: string): Observable<any> {
+    const urlde = `${this.deleteemployeraccount}deleteEmployer/${empid}`;
+    return this.h1.delete(urlde);
+  }
+
+
+  checkEmployer(empmailid: string): Observable<any> {
+    const url = `${API_BASE_URL}checkEmployer?empmailid=${empmailid}`;
+    return this.h1.get(url);
+  }
+
+  //update employer data
+  updateEmployee(data: any): Observable<any> {
+    return this.h1.post(this.employerupdateurl, data).pipe(
+      catchError(this.handleEr)
+    );
+  }
+  private handleEr(error: HttpErrorResponse) {
+    let errorMessage = 'An error occurred';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(errorMessage);
+  }
+
+
+  logincheckemp(data: any) {
+    console.log(data);
+
+
+    return this.h1.post(this.employercheckurl, data).subscribe({
+      next: (resp: any) => {
+        AuthInterceptor.accessToken = resp.accessToken;
+        const mainres: Employer = resp;
+        console.log("emoployer");
+        console.log(`Login response from server: ${mainres}`);
+        this.cookie.set('emp', resp.empid);
+
+        console.log(resp.empfname);
+        if (resp) {
+          console.log("Server responded with a object of employer");
+
+          // Redirect to the dashboard if the response is true
+          alert('Login successful!');
+          this.router.navigate(['/dashboardemp']);
+        } else {
+          // Handle other response statuses or errors
+          alert('Incorrect Credentials!');
+          this.router.navigate(['/employer']);
+        }
+
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert('Incorrect Credentials!');
+        this.router.navigate(['/employer']);
+      }
+    });
+  }
+
+  createOrGetEmployer(empmailid: any){
+    const data = { empmailid }; // Wrap the username in an object
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    this.h1.post(this.insertgmailemp, empmailid, { headers }).subscribe({
+      next: (resp: any) => {
+        AuthInterceptor.accessToken = resp.accessToken;
+        console.log("Access Token Generated" + resp.accessToken);
+        const mainres: Employer = resp;
+        console.log(`Login response from server: ${mainres}`);
+        this.cookie.set('Employer', resp.empid);
+        if (resp && resp.accessToken) {
+          AuthInterceptor.accessToken = resp.accessToken;
+          console.log("Access Token Generated: " + resp.accessToken);
+          this.cookie.set('emp', resp.empid);
+          console.log(resp.empid);
+          alert('Account Created Successfull Successful!');
+          this.router.navigate(['/dashboardemp/']);
+        } else {
+          alert('Login Failed. Your Google account is not registered.');
+          this.router.navigate(['/employer']);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert('Login Failed. Your Google account is not registered.');
+        this.router.navigate(['/employer']);
+      }
+    });
+  }   
+  employerLoginCheck(empmailid: string) {
+    const data = { empmailid }; // Wrap the username in an object
+  
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  
+    this.h1.post(this.logincheckurlgmailemp, data, { headers }).subscribe({
+      next: (resp: any) => {
+            AuthInterceptor.accessToken = resp.accessToken;
+          console.log("Access Token Generated" + resp.accessToken);
+          const mainres: Employer = resp;
+          console.log(`Login response from server: ${mainres}`);
+          this.cookie.set('emp', resp.empid);
+          if (resp && resp.accessToken) {
+            AuthInterceptor.accessToken = resp.accessToken;
+            console.log("Access Token Generated: " + resp.accessToken);
+            this.cookie.set('user', resp.empid);
+            console.log("check the empid",resp.empid);
+            alert('Login Successful!');
+          this.router.navigate(['/dashboardemp']);
+        } else {
+          // Handle other response statuses or errors
+          alert('Incorrect Credentials!');
+          this.router.navigate(['/employer']);
+        }
+
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert('Incorrect Credentials!');
+        this.router.navigate(['/employer']);
+      }
+    });
+  }
+  
+
+
+  public insertemployer(data: any) {
+    console.log("done");
+    return this.h1.post(this.inserturle, data).subscribe({
+      next: (resp: any) => {
+
+        console.log(resp);
+
+        console.log("Data inserted");
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
+
+
+  public insertemployeremail(data: any) {
+    console.log("done");
+    return this.h1.post(this.inserturlemail, data).subscribe({
+      next: (resp: any) => {
+        console.log("email is getting inserted");
+        console.log(resp);
+        this.router.navigate(['/dashboardemp/profilemep']);
+
+        console.log("Data inserted mail");
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
+
+
+  fetchemployer() {
+    return this.h1.get(this.employerdetailsfetchurl);
+  }
+
+
+
+  private handleError(error: any): Observable<never> {
+
+    console.error('An error occurred:', error);
+
+    // Return an observable with an error message or perform other error handling tasks.
+    return throwError('Something went wrong. Please try again later.');
+  }
+
+  //Job Post
+
+  public jobpostinsert(data: any): Observable<any> {
+    console.log("Data sent to server:", data);
+    console.log("done and check the data is coming or not ", data);
+    return this.h1.post(this.inserturljobpost, data, { responseType: 'text' });
+  }
+  
+  
+
+  fetchjobpost() {
+    return this.h1.get(this.fetchjobposturl);
+  }
+
+
+
+
+  //Conatct
+  public insertcontact(data: any) {
+    console.log("done");
+    return this.h1.post(this.inserturlcontact, data).subscribe({
+      next: (resp: any) => {
+
+        console.log(resp);
+
+        console.log("Data inserted");
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
+
+  fetchcontact() {
+    return this.h1.get(this.fetchcontactdetails);
+  }
+
+
+  //Appply form data
+  fetchapplyform() {
+    return this.h1.get(this.fetchapplyjobform);
+  }
+
+  //update apply form by employer 
+  updateProfileUpdate(application: ApplyJob): Observable<ApplyJob> {
+    return this.h1.post<ApplyJob>(
+      `${API_BASE_URL}updateProfileUpdate`,
+      application
+    );
+  }
+  //insert apply form data
+  public insertapplyjob(data: any) {
+    console.log("done");
+    return this.h1.post(this.inserturlapplyjob, data).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+
+        console.log("Data inserted");
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
+
+  //insert notification
+  public insertnotification(data: any) {
+    console.log("done");
+    return this.h1.post(this.notificationurl, data).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+
+        console.log("Data inserted");
+        this.router.navigate(['/admin/dashboardadmin']);
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
+
+  fetchnotify(): Observable<any[]> {
+    return this.h1.get<any[]>(this.fetchnotificationurl);
+  }
+
+
+  //Insert Resume
+  public resumeinsert(data: any): Observable<any> {
+    console.log(data);
+    console.log("done");
+  
+    return this.h1.post(this.insert_resumeurl, data);
+  }
+  
+  
+
+
+  //fetch question paper fetchquestionpaperurl
+  fetchquestion() {
+    return this.h1.get(this.fetchquestionpaperurl);
+  }
+
+  loginWithGoogle() {
+    return signInWithPopup(this.auth, new GoogleAuthProvider());
+  }
+
+  logout() {
+    return signOut(this.auth);
+  }
+
+
+
+  //check all answere from database 
+  public checkallanswer(userAnswers: any[]) {
+    console.log("Sending the answere to checked in database");
+    console.log(userAnswers, "checking all the values are correct or not");
+
+    // Replace `this.checkalanswere` with the actual URL where your Spring backend is hosted
+    const url = this.checkalanswere;
+
+    return this.h1.post(url, userAnswers).subscribe({
+      next: (resp: any) => {
+        console.log(resp);
+        if (resp) {
+          this.router.navigate(['/dashboarduser/applyjob'])
+        }
+        console.log("Data checked from the database");
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.router.navigate(['/dashboarduser/'])
+      }
+    });
+  }
+
+}

@@ -1,0 +1,91 @@
+<div class="container text-center">
+    <p><a routerLink="/login"><b>Post your resume</b></a> - It only takes a few seconds</p>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-2 hello text-center" style="padding: 15px;">
+            <a (click)="showContainer('jbfeed')">Job Feed</a>
+        </div>
+        <div class="col-md-2 hello text-center" style="padding: 15px;">
+            <a (click)="showContainer('showsearches')">Job Searches</a>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container" [hidden]="!showJobFeed" id="jbfeed">
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div class="custom-box clickable" style="margin: 10px 0px; border-radius: 20px;"
+                        *ngFor="let job of data" (click)="selectJob(job)">
+                        <h4>{{ job.jobtitle }}</h4>
+                        <p>{{ job.companyforthisjob }}</p>
+                        <!-- Display other relevant job information here -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="container custom-box" style="border-radius: 20px;" *ngIf="selectedJob">
+                        <h4>{{ selectedJob.jobtitle }}</h4>
+                        <p>{{ selectedJob.companyforthisjob }}</p>
+                        <!-- <p>{{ selectedJob.location }}</p> -->
+                        <button type="button" class="btn btn-primary" (click)="navigateToSignIn()">Apply Now</button>
+                        <ul>
+                            <!-- <li>{{ selectedJob.descriptiondata }}</li> -->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" [hidden]="!showJobSearches" id="showsearches">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Trending Searches</h2>
+            <p>Indeed हिंदी में भी उपलब्ध है</p>
+            <button (click)="toggleTrending()" class="btn btn-primary text-center mt-4">
+                {{ showTrending ? 'Show Less' : 'Show More' }}
+            </button>
+            <div class="row mt-4" *ngIf="showTrending">
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Remote</li>
+                        <li>Full Time Kochi, Kerala</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Indore, Madhya Pradesh</li>
+                        <li>Part Time Remote</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Visakhapatnam, Andhra Pradesh</li>
+                        <li>Full Time Ahmedabad, Gujarat</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Lucknow, Uttar Pradesh</li>
+                        <li>Work From Home Kalyan Dombivli, Maharashtra</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,442 @@
+<div class="container-fluid" style="margin-bottom: 15px; background-color: #007BFF; padding: 50px; border-bottom-left-radius: 50px;">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <div class="container">
+                    <div class="row">
+                        <div class="container" style="margin-top: 25px; margin-bottom: 15px;">
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <a routerLink="/finjobpage">
+                                        <div class="input-group">
+                                            <input type="text" id="findjob" name="findjob" class="form-control"
+                                                placeholder="What job title, keywords or company"
+                                                [(ngModel)]="searchQuery">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">Search</button>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md text-center">
+                            <div class="rounded shadow p-2" style="background-color: white;">
+                                <h2 style="font-weight: bold;">Let Employers Find You!</h2>
+                                <p>Get discovered by 10,000+ Employers & apply to jobs in a single click</p>
+                                <p>Get notified about jobs matching your criteria</p>
+                                <p>Create Job Alert</p>
+                                <button class="btn btn-danger" (click)="navigateToSignIn()">Register for Free</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-4 category-location-container">
+    <div class="row">
+        <div class="col-md-4 text-center section">
+            <h2>Show Jobs by Location</h2>
+            <div class="links">
+                <a [routerLink]="['/finjobpage', 'noida']">Noida</a>
+                <a [routerLink]="['/finjobpage', 'Saudi']">Saudi Arabia</a>
+
+
+
+                <!-- Add more location links with corresponding parameters -->
+
+                <a routerLink="/finjobpage">Qatar</a>
+                <a routerLink="/finjobpage">Kuwait</a>
+                <a routerLink="/finjobpage">Oman</a>
+                <a routerLink="/finjobpage">Bahrain</a>
+                <a routerLink="/finjobpage">Abu Dhabi</a>
+                <a routerLink="/finjobpage">Dubai</a>
+                <a routerLink="/finjobpage">Sharjah</a>
+                <a routerLink="/finjobpage">Riyadh</a>
+                <!-- Add more location links as needed -->
+            </div>
+        </div>
+        <div class="col-md-5 text-center section">
+            <h2>Show Jobs by Category</h2>
+            <div class="links">
+                <a routerLink="/finjobpage">Java developer</a>
+                <a routerLink="/finjobpage">Accounts / Tax</a>
+                <a routerLink="/finjobpage">Banking / Financial Services</a>
+                <a routerLink="/finjobpage">Construction / Civil Engg</a>
+                <a routerLink="/finjobpage">HR / Industrial Relations</a>
+                <!-- Add more category links as needed -->
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="image-slider">
+                <img [src]="images[currentImageIndex]" alt="Slider Image" class="slider-image" [@fadeInOut]="'in'" />
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container">
+    <h2 class="text-center">Top Recruiters Hiring</h2>
+    <div class="row m-4">
+        <div *ngFor="let company of companies" class="col-md-3">
+            <div class="company-logo">
+                <img [src]="company.logoUrl" alt="{{ company.name }}" />
+                <!-- <span>{{ company.name }}</span> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="container text-center">
+    <p><a routerLink="/login"><b>Post your resume</b></a> - It only takes a few seconds</p>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-2 hello text-center" style="padding: 15px;">
+            <a href="#" (click)="showContainer('jbfeed')">Job Feed</a>
+        </div>
+        <div class="col-md-2 hello text-center" style="padding: 15px;">
+            <a href="#" (click)="showContainer('showsearches')">Job Searches</a>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container" [hidden]="!showJobFeed" id="jbfeed">
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div class="custom-box clickable" style="margin: 10px 0px; border-radius: 20px;"
+                        *ngFor="let job of data" (click)="selectJob(job)">
+                        <h4>{{ job.jobtitle }}</h4>
+                        <p>{{ job.companyforthisjob }}</p>
+                        <!-- Display other relevant job information here -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="container custom-box" style="border-radius: 20px;" *ngIf="selectedJob">
+                        <h4>{{ selectedJob.jobtitle }}</h4>
+                        <p>{{ selectedJob.companyforthisjob }}</p>
+                        <!-- <p>{{ selectedJob.location }}</p> -->
+                        <button type="button" class="btn btn-primary" (click)="navigateToSignIn()">Apply Now</button>
+                        <ul>
+                            <!-- <li>{{ selectedJob.descriptiondata }}</li> -->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" [hidden]="!showJobSearches" id="showsearches">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Trending Searches</h2>
+            <p>Indeed हिंदी में भी उपलब्ध है</p>
+            <button (click)="toggleTrending()" class="btn btn-primary text-center mt-4">
+                {{ showTrending ? 'Show Less' : 'Show More' }}
+            </button>
+            <div class="row mt-4" *ngIf="showTrending">
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Remote</li>
+                        <li>Full Time Kochi, Kerala</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Indore, Madhya Pradesh</li>
+                        <li>Part Time Remote</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Visakhapatnam, Andhra Pradesh</li>
+                        <li>Full Time Ahmedabad, Gujarat</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li>Full Time Lucknow, Uttar Pradesh</li>
+                        <li>Work From Home Kalyan Dombivli, Maharashtra</li>
+                        <!-- Add more items as needed -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid my-4 p-4 bg-light-blue">
+    <div class="row">
+        <!-- Main Content Column with Image -->
+        <div class="col-md-6 text-center">
+
+            <img src="assets/Screenshot-2023-08-25-110628.png" alt="Your Image" class="card-img-top"
+                style="max-width: 20%; height: auto;">
+            <div class="card-body">
+                <h2 class="card-title">Boost Your Job Hunt</h2>
+                <p class="card-text">
+                    Get a CV that highlights your profile and increases views by up to 50%.
+                </p>
+            </div>
+
+        </div>
+        <!-- First Additional Column -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Resume Spotlight</h4>
+                    <p class="card-text">
+                        Stand out from the crowd! We highlight your profile to get it easily noticed by employers.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-custom">Know More</a>
+                </div>
+            </div>
+        </div>
+        <!-- Second Additional Column -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Resume Spotlight</h4>
+                    <p class="card-text">
+                        Stand out of the crowd! We highlight your profile to get it easily noticed by Employers.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-custom">Know More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row text-center mt-4" style="color: blue;">
+        <h3><b>PRODUCTS AND SERVICES</b></h3>
+        <h2>Get Pay Right</h2>
+    </div>
+    <div class="row" style="padding-bottom: 10px;">
+        <div class="col-md-6" style="border-right: 2px solid blue;">
+            <div class="container">
+                <div class="row">
+                    <h4>For Employers</h4>
+                    <p>Empower your team with integrated compensation data and technology solutions.</p>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="container">
+                        <div class="row">
+                            <h4>It's Easy to Get Started</h4>
+                            <p>Transform compensation at your organization and get pay right — see how with a
+                                personalized demo.
+
+                            </p>
+                        </div>
+                        <div class="">
+                            <button routerLink="/employer" class="btn btn-primary">SEE IT IN ACTION</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="border-left: 2px solid blue;">
+            <div class="container">
+                <div class="row">
+                    <h4>For Employees</h4>
+                    <p>Empower your team with integrated compensation data and technology solutions.</p>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <div class="row concom">
+                            <div class="col-md-3">
+                                <img src="assets/Screenshot-2023-08-25-110628.png" alt="">
+                            </div>
+                            <div class="col-md-9">
+                                <a href="/">CompAnalyst</a>
+                                <p>Make smarter compensation decisions that keep you competitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="container">
+                        <div class="row">
+                            <h4>It's Easy to Get Started</h4>
+                            <p>Transform compensation at your organization and get pay right — see how with a
+                                personalized demo.
+
+                            </p>
+                        </div>
+                        <div class="">
+                            <button routerLink="/login" class="btn btn-primary">GET START</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container " style="border-radius: 25px; overflow: hidden;">
+    <div class="row ">
+        <!-- Content Column with Animation -->
+        <div class="col-md-6 d-flex align-items-center ">
+            <div>
+                <h1 class="text-center">Get access to 64k+ jobs on the job4jobless app</h1>
+                <p class="text-center">Get real-time job updates & new job notifications!</p>
+                <p class="text-center">Scan to download</p>
+            </div>
+        </div>
+        <!-- Image Column with Background Color and Padding -->
+        <div class="col-md-6">
+            <img src="assets/home-download-banner.63c94cdb-removebg-preview.png" alt="Download QR Code"
+                class="img-fluid d-block mx-auto my-4">
+        </div>
+    </div>
+</div>
+
+
+<app-footer></app-footer>

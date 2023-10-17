@@ -1,0 +1,35 @@
+ /* Custom CSS */
+ .footer {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+    box-shadow: 0 -5px 10px rgba(0, 123, 255, 0.2); /* Add shadow at the top */
+  }
+
+  .footer h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .footer ul {
+    padding: 0;
+  }
+
+  .footer ul li {
+    list-style: none;
+    margin-bottom: 10px;
+  }
+
+  .footer a {
+    text-decoration: none;
+    color: #000;
+    transition: color 0.3s; /* Add transition for color change on hover */
+  }
+
+  .footer a:hover {
+    color: #007bff; /* Change color on hover */
+  }
+
+  .footer p {
+    font-size: 16px;
+    font-weight: bold;
+  }

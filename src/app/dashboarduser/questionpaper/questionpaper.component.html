@@ -1,0 +1,33 @@
+<!-- <div ngbAccordion> -->
+  <!-- <div ngbAccordionItem [collapsed]="false"> -->
+    <!-- <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>Apptitude</button>
+    </h2> -->
+    <!-- <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template> -->
+          <!-- HTML template -->
+          <div class="container">
+            <div class="row">
+              <form [formGroup]="form">
+                <div *ngFor="let question of data" class="question-container">
+                  <h3 class="question">{{ question.question }}</h3>
+                  <ul class="options">
+                    <li *ngFor="let option of [question.optionA, question.optionB, question.optionC, question.optionD]"
+                      class="option">
+                      <input type="radio" [formControlName]="'question' + question.id" [value]="option"
+                        id="option{{ question.id }}-{{ option }}">
+                      <label for="option{{ question.id }}-{{ option }}" class="option-label">{{ option }}</label>
+                    </li>
+                  </ul>
+                </div>
+                <button (click)="submitAnswers()">Submit Answers</button>
+              </form>
+
+            </div>
+          </div>
+        <!-- </ng-template>
+      </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+  
