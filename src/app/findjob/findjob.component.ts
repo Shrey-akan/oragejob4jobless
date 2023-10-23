@@ -72,6 +72,9 @@ export class FindjobComponent implements OnInit{
   showJobSearches = false;
   selectedJob: Job | null = null;
   data: Job[] = [];
+  itemsPerPage = 4; // Number of items to display per page
+  currentPage = 1; // Current page number
+  totalPages!: number; // Total number of pages
   images = [
     'assets/07-image.jpg',
     'assets/09-image.jpg',
@@ -93,16 +96,20 @@ export class FindjobComponent implements OnInit{
 
   constructor(private router: Router, private b1: UserService) {}
 
-  selectJob(data: Job): void {
+  selectJob(data: any): void {
     this.selectedJob = data;
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
   }
 
   ngOnInit(): void {
     let response = this.b1.fetchjobpost();
     response.subscribe((data1: any) => {
       this.data1 = data1;
-      // Initialize data with all jobs initially
-      this.data = data1;
+      this.data = data1; // Initialize data with all jobs initially
+      this.totalPages = Math.ceil(this.data.length / this.itemsPerPage);
     });
     setInterval(() => this.nextImage(), 1000);
   }
@@ -132,4 +139,10 @@ export class FindjobComponent implements OnInit{
   nextImage() {
     this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
   }
+  getJobsForCurrentPage(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.data.slice(startIndex, endIndex);
+  }
+  
 }

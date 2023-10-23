@@ -114,7 +114,7 @@
             <div class="row">
                 <div class="col-md-6 ">
                     <div class="custom-box clickable" style="margin: 10px 0px; border-radius: 20px;"
-                        *ngFor="let job of data" (click)="selectJob(job)">
+                        *ngFor="let job of getJobsForCurrentPage()" (click)="selectJob(job)">
                         <h2>{{ job.jobtitle }}</h2>
                         <h3>{{ job.companyforthisjob }}</h3>
                         <!-- Display other relevant job information here -->
@@ -144,7 +144,7 @@
                             <li *ngFor="let description of selectedJob.descriptiondata">{{ description }}</li>
                         </ul>
                     </div>
-                    
+
 
 
 
@@ -152,6 +152,16 @@
             </div>
         </div>
     </div>
+    <div class="pagination">
+        <button class="btn btn-primary" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+          Previous
+        </button>
+        <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
+        <button class="btn btn-primary" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+          Next
+        </button>
+      </div>
+      
 </div>
 
 
@@ -202,8 +212,7 @@
         <!-- Main Content Column with Image -->
         <div class="col-md-6 text-center">
 
-            <img src="assets/logojob.png" alt="Your Image" class="card-img-top"
-                style="max-width: 20%; height: auto;">
+            <img src="assets/logojob.png" alt="Your Image" class="card-img-top" style="max-width: 20%; height: auto;">
             <div class="card-body">
                 <h2 class="card-title">Boost Your Job Hunt</h2>
                 <p class="card-text">
@@ -249,7 +258,8 @@
             <div class="container">
                 <div class="row">
                     <h1>For Employers</h1>
-                    <h3>Empower your team with an automated hiring process and build your team with top-tier talent to drive success and innovation in your organization.</h3>
+                    <h3>Empower your team with an automated hiring process and build your team with top-tier talent to
+                        drive success and innovation in your organization.</h3>
                 </div>
                 <div class="row">
                     <div class="container">
@@ -259,7 +269,9 @@
                             </div>
                             <div class="col-md-9">
                                 <a href="/">Applicant Tracking System (ATS)</a>
-                                <p>Streamline your hiring processes with the help of ATS, which allows employers to manage job applications, schedule interviews, communicate with candidates, and track applicant status.</p>
+                                <p>Streamline your hiring processes with the help of ATS, which allows employers to
+                                    manage job applications, schedule interviews, communicate with candidates, and track
+                                    applicant status.</p>
                             </div>
                         </div>
                     </div>
@@ -272,26 +284,28 @@
                             </div>
                             <div class="col-md-9">
                                 <a href="/">
-                                 Job Posting and Promotion:
-                                    </a>
-                              <p>Create detailed job descriptions, specify job requirements, set desired qualifications easily and promote job listings to reach a larger talent pool.
-                            </p>
+                                    Job Posting and Promotion:
+                                </a>
+                                <p>Create detailed job descriptions, specify job requirements, set desired
+                                    qualifications easily and promote job listings to reach a larger talent pool.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="container">
-                        <div class ="row concom">
+                        <div class="row concom">
                             <div class="col-md-3">
                                 <img src="assets/Job Posting and Promotion.png" alt="">
                             </div>
                             <div class="col-md-9">
                                 <a href="/">
-                                   Resume Database Access:
-                                    </a>
-                              <p>Employers can search for potential candidates from the vast database of resumes and profiles using various filters like skills, experience, location, and more. 
-                            </p>
+                                    Resume Database Access:
+                                </a>
+                                <p>Employers can search for potential candidates from the vast database of resumes and
+                                    profiles using various filters like skills, experience, location, and more.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -304,8 +318,10 @@
                             </div>
                             <div class="col-md-9">
                                 <a href="/">Applicant Tracking System (ATS):</a>
-                              <p> Streamline your hiring processes with the help of ATS, which allows employers to manage job applications, schedule interviews, communicate with candidates, and track applicant status.
-                            </p>
+                                <p> Streamline your hiring processes with the help of ATS, which allows employers to
+                                    manage job applications, schedule interviews, communicate with candidates, and track
+                                    applicant status.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -319,8 +335,9 @@
                             <div class="col-md-9">
                                 <a href="/">
                                     4. Company Branding:
-                                    </a>
-                               <p>Showcasing a strong employer brand can attract more qualified candidates who align with the company's values and culture.</p>
+                                </a>
+                                <p>Showcasing a strong employer brand can attract more qualified candidates who align
+                                    with the company's values and culture.</p>
                             </div>
                         </div>
                     </div>
@@ -329,7 +346,7 @@
                     <div class="container">
                         <div class="row">
                             <h4>Analytics and Insights:</h4>
-                        <p>Our analytics tools allow employers to track the performance of their job listings.</p>
+                            <p>Our analytics tools allow employers to track the performance of their job listings.</p>
                         </div>
                         <div class="">
                             <button routerLink="/employer" class="btn btn-primary">SEE IT IN ACTION</button>
@@ -342,8 +359,9 @@
             <div class="container">
                 <div class="row">
                     <h1>For Employees</h1>
-                  <h3>Simplify your job search with job alerts, resume building, detailed insights on your application process and resources
-                </h3>
+                    <h3>Simplify your job search with job alerts, resume building, detailed insights on your application
+                        process and resources
+                    </h3>
                 </div>
                 <div class="row">
                     <div class="container">
@@ -354,8 +372,9 @@
                             <div class="col-md-9">
                                 <a href="/">Job Search and Alerts:
                                 </a>
-                             <p>Get relevant search results by setting up job alerts to receive notifications when new job listings that match your criteria are posted. 
-                            </p>
+                                <p>Get relevant search results by setting up job alerts to receive notifications when
+                                    new job listings that match your criteria are posted.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -369,8 +388,9 @@
                             <div class="col-md-9">
                                 <a href="/"> Resume Building and Posting:
                                 </a>
-                               <p>Job seekers can create professional and compelling resumes with the help of a resume builder tool.
-                            </p>
+                                <p>Job seekers can create professional and compelling resumes with the help of a resume
+                                    builder tool.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -384,8 +404,9 @@
                             <div class="col-md-9">
                                 <a href="/"> Company Reviews and Insights:
                                 </a>
-                               <p>Get in-depth company insight into a company's culture, work environment, and employee experiences, reviews and ratings
-                            </p>
+                                <p>Get in-depth company insight into a company's culture, work environment, and employee
+                                    experiences, reviews and ratings
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -399,8 +420,9 @@
                             <div class="col-md-9">
                                 <a href="/">Application Tracking:
                                 </a>
-                              <p>Track the status of your job applications. See when your application was viewed shortlisted for interviews, and receive updates on your application progress.
-                            </p>
+                                <p>Track the status of your job applications. See when your application was viewed
+                                    shortlisted for interviews, and receive updates on your application progress.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -413,8 +435,10 @@
                             </div>
                             <div class="col-md-9">
                                 <a href="/">Career Resources</a>
-                               <p>Our articles, blogs, and newsletters provide valuable insights on resume writing, interview preparation, salary negotiation, and career growth for both job seekers and employers.
-                            </p>
+                                <p>Our articles, blogs, and newsletters provide valuable insights on resume writing,
+                                    interview preparation, salary negotiation, and career growth for both job seekers
+                                    and employers.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -433,7 +457,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
 <div class="container " style="border-radius: 25px; overflow: hidden;">
