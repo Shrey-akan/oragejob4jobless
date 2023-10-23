@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
 
   userRegisteration(): void {
     if (this.userregister.valid) {
-      this.http.post('https://job4jobless.com:9001/insertusermail', this.userregister.getRawValue()).subscribe({
+      this.http.post('http://localhost:9001/insertusermail', this.userregister.getRawValue()).subscribe({
         next: (payload: any) => {
 
           console.log(payload);

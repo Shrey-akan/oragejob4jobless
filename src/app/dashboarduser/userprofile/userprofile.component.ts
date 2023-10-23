@@ -79,7 +79,7 @@ export class UserprofileComponent implements OnInit {
       const formData = this.passwordResetForm.value;
 
       // Make a POST request to your backend for password reset
-      this.http.post('https://job4jobless.com:9001/resetPassword', formData)
+      this.http.post('http://localhost:9001/resetPassword', formData)
         .subscribe(
      {
       next:     (response: any) => {

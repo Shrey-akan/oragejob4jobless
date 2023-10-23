@@ -47,4 +47,18 @@
 .received {
   background-color: #f4f4f4;
   text-align: left;
+  
+}
+
+.video-container {
+  position: relative;
+  
+}
+
+
+
+.video-container:nth-child(2) {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

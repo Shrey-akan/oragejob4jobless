@@ -1,12 +1,24 @@
-/* Add this CSS to your existing CSS file or a separate CSS file */
-.user-list {
-  background-color: #f7f7f7;
-  padding: 10px;
+.container {
+  background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+  border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
 }
 
-.user-list h3, .chat-messages h3 {
+h2 {
+  text-align: center;
+}
+
+.employers-box, .messages-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.employers-box h3, .messages-box h3 {
   text-align: center;
 }
 
@@ -21,14 +33,6 @@
 
 .messageFrom:hover {
   background-color: #c1d8ea;
-}
-
-.chat-messages {
-  background-color: #f7f7f7;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
 }
 
 .messages-list-container {
@@ -66,7 +70,13 @@
   flex-grow: 1;
 }
 
-
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
 
 .btn-primary {
   background-color: #007bff;

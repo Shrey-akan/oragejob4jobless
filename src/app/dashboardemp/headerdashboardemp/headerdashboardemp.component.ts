@@ -24,12 +24,12 @@ export class HeaderdashboardempComponent implements OnInit {
   }
   logoutEmployer() {
     // Make an HTTP POST request to your logout endpoint
-    this.http.post('https://job4jobless.com:9001/logoutEmployer', null).subscribe(
+    this.http.post('http://localhost:9001/logoutEmployer', null).subscribe(
       {
         next: (response: any) => {
           // Handle the successful logout response, e.g., navigate to a login page
           console.log('Logout successful', response);
-          alert(response);
+          alert("Logged Out successful");
           
           // Clear employer-related data from local storage
           localStorage.removeItem('empid');

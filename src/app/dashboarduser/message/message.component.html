@@ -1,12 +1,12 @@
 <div class="container mt-5">
-  <h2 class="text-center">Messages</h2>
+  <h2 class="text-center">Chat Here!</h2>
   <div class="row">
-    <!-- User List Column -->
-    <div class="col-md-4 col-sm-12 mb-3">
-      <div class="user-list">
-        <h3 class="mb-3">Employer</h3>
+    <!-- Employers List Column -->
+    <div class="col-md-4 col-sm-12">
+      <div class="employers-box">
+        <h3>Employers</h3>
         <div *ngFor="let message of messages" class="messageFrom mb-2" (click)="selectUser(message.messageFrom)">
-          {{ message.messageFrom }}
+          {{ employerNames[message.messageFrom] }}
         </div>
       </div>
     </div>
@@ -20,8 +20,8 @@
             <i class="fas fa-video"></i>
           </button>
         </h3>
-        
-        
+
+
         <div *ngIf="messages.length === 0; else chatContent">
           <i class="fa-solid fa-message"></i>
           <h4>No messages available</h4>

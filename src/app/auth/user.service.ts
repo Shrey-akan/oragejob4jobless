@@ -14,7 +14,7 @@ import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { JobPostService } from './job-post.service';
 
 // Define your API base URL as a constant variable
-const API_BASE_URL = 'http://job4jobless.com:9001/';
+const API_BASE_URL = 'http://localhost:9001/';
 interface User {
   uid: Number;
   userName: String;

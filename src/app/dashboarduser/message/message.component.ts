@@ -20,6 +20,7 @@ class SendMessage {
 })
 export class MessageComponent implements OnInit {
   empidMap: { [key: string]: string } = {};
+  employerNames: { [messageFrom: string]: string } = {};
   messages: SendMessage[] = [];
   selectedUser: string | null = null;
   filteredMessages: SendMessage[] = [];
@@ -47,21 +48,52 @@ export class MessageComponent implements OnInit {
   fetchMessages() {
     const uniqueNames = new Set<string>();
 
-    this.http.get<SendMessage[]>('https://job4jobless.com:9001/fetchMessages').subscribe((messages: SendMessage[]) => {
+    this.http.get<SendMessage[]>('http://localhost:9001/fetchMessages').subscribe((messages: SendMessage[]) => {
       this.messages = messages.filter((message) => {
-        if (!uniqueNames.has(message.messageFrom)) {
+        console.log('message from', message.messageFrom);
+        console.log('message to' , message.messageTo);
+        console.log('userID', this.userID);
+
+        if (!uniqueNames.has(message.messageFrom)&&(message.messageTo == this.userID)) {
           uniqueNames.add(message.messageFrom);
+                console.log(message.messageTo === this.userID);
+                console.log(message.messageTo === this.abc);
           return message.messageTo === this.userID;
         }
         return false;
+
       });
+      this.loadEmployerNames();
     });
 
     this.fetchMyMessages();
   }
 
+  loadEmployerNames() {
+    const uniqueMessageFromValues = Array.from(new Set(this.messages.map((message) => message.messageFrom)));
+    
+    // Fetch employer data, including empid and name
+    this.b1.fetchemployer().subscribe((employerData: any) => {
+      console.log('Employer Data:', employerData);
+      if (Array.isArray(employerData)) {
+        for (const messageFrom of uniqueMessageFromValues) {
+          const matchingEmployer = employerData.find((employer: any) => employer.empid === messageFrom);
+          if (matchingEmployer) {
+            // Matching employer found, store the name in employerNames
+            this.employerNames[messageFrom] = matchingEmployer.emplname;
+          }
+        }
+      } else {
+        console.error('Received employer data is not an array');
+      }
+    });
+  }
+  
+  
+  
+
   fetchMyMessages() {
-    this.http.get<SendMessage[]>('https://job4jobless.com/fetchMessages').subscribe((messages: SendMessage[]) => {
+    this.http.get<SendMessage[]>('http://localhost:9001/fetchMessages').subscribe((messages: SendMessage[]) => {
       this.filteredMessages = [];
       const uniqueMessageIds = new Set<string>();
 
@@ -89,7 +121,7 @@ export class MessageComponent implements OnInit {
     if (this.selectedUser && this.newMessage.trim() !== '') {
       const messageToSend = new SendMessage(this.selectedUser, this.abc, this.newMessage);
 
-      this.http.post<SendMessage>('https://job4jobless.com:9001/send', messageToSend).subscribe({
+      this.http.post<SendMessage>('http://localhost:9001/send', messageToSend).subscribe({
         next: (response: SendMessage) => {
           this.newMessage = '';
           this.fetchMessages();

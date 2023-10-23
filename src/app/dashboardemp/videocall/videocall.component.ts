@@ -61,7 +61,7 @@ export class VideocallComponent implements OnInit {
   fetchMessages() {
     // Fetch previous messages from the server
     this.http
-      .get<SendMessage[]>('https://job4jobless.com:9001/fetchMessages')
+      .get<SendMessage[]>('http://localhost:9001/fetchMessages')
       .subscribe((messages: SendMessage[]) => {
         // Filter messages to only include the relevant ones
         this.messages = messages.filter(
@@ -88,7 +88,7 @@ export class VideocallComponent implements OnInit {
 
       // Make an HTTP POST request to send the message
       this.http
-        .post<SendMessage>('https://job4jobless.com:9001/send', messageToSend)
+        .post<SendMessage>('http://localhost:9001/send', messageToSend)
         .subscribe({
           next: (response: any) => {
             console.log('Message sent successfully:', response);

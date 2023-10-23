@@ -1,15 +1,20 @@
-<div class="container-fluid" >
+<div class="container-fluid">
   <div class="row" style="position: relative;">
-    <div class="col-md-12" style="color: white;">
-      <h1 style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Job Hunting Made Easy</h1>
-      <h2 style="position: absolute; top: 60%; left: 50%; color: black; transform: translate(-50%, -50%);"><strong>Your awesome slogan goes here.</strong></h2>
-      <a routerLink="/about" class="btn btn-primary btn-lg" style="position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%);">Learn More</a>
-    </div>
     <div class="col-md-12">
-      <img src="assets/virtual-interviews.jpg" alt="Hero Image" class="img-fluid" style="max-height: 400px;">
+      <!-- Background with image -->
+      <img src="assets/aboutpagebanner.png" alt="Hero Image" class="img-fluid" style="max-height: 70vh;">
+
+      <!-- Text container with a transparent background -->
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(119, 114, 114, 0.6); color: black; padding: 20px; border-radius: 5px;">
+        <h1><b>Job Hunting Made Easy</b></h1>
+        <h2 style="color: black;"><strong>Your awesome slogan goes here.</strong></h2>
+        <p>Your additional text goes here.</p>
+        <a routerLink="/about" class="btn btn-primary btn-lg">Learn More</a>
+      </div>
     </div>
   </div>
 </div>
+
 
 
   
@@ -254,7 +259,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <img src="assets/1 (2).jpg" alt="">
+        <img src="assets/contact us@4x-8.png" alt="">
       </div>
       <div class="col-md-6 card" >
         <form style="padding: 10px 0px;" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
@@ -303,7 +308,7 @@
   </div>
   
   
-  
+<!--   
  <div class="container" style="margin: 50px auto;">
   <div class="row">
     <div class="col-md-3">
@@ -358,7 +363,7 @@
     </div>
     <div class="col-md-3">
       <div class="image-box">
-        <img src="image1.jpg" alt="Image 1">
+        <img src="assets/image 01.jpg" alt="Image 1">
         <div class="image-overlay">
           <p class="overlay-text">Image 1 Description</p>
         </div>
@@ -366,12 +371,12 @@
     </div>
     <div class="col-md-3">
       <div class="image-box">
-        <img src="image1.jpg" alt="Image 1">
+        <img src="assets/image 02.jpg" alt="Image 1">
         <div class="image-overlay">
           <p class="overlay-text">Image 1 Description</p>
         </div>
       </div>
     </div>
   </div>
- </div>
+ </div> -->
  <app-footer></app-footer>

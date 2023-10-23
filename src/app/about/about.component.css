@@ -27,3 +27,9 @@
 .client-card:hover .testimonial {
     display: block;
 }
+.card:hover {
+    border: 2px solid #007bff;
+}
+.card {
+    height: 100%;
+}

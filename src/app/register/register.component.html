@@ -92,45 +92,28 @@
               </div>
               <div class="form-group">
                 <label for="usercountry">Country:</label>
-                <select class="form-control" formControlName="usercountry">
-                  <option value="">Select a country</option>
-                  <option value="usa">United States</option>
-                  <option value="canada">Canada</option>
-                  <option value="uk">United Kingdom</option>
-                  <!-- Add more options here -->
-                </select>
-                <div
-                  *ngIf="userregister.get('usercountry')?.hasError('required') && userregister.get('usercountry')?.touched"
+                <input type="text" class="form-control" formControlName="usercountry" placeholder="Enter your country">
+                <div *ngIf="userregister.get('usercountry')?.hasError('required') && userregister.get('usercountry')?.touched"
                   class="text-danger">Country is required.
                 </div>
               </div>
+              
               <div class="form-group">
                 <label for="userstate">State:</label>
-                <select class="form-control" formControlName="userstate">
-                  <option value="">Select a state</option>
-                  <option value="usa">United States</option>
-                  <option value="canada">Canada</option>
-                  <option value="uk">United Kingdom</option>
-                  <!-- Add more options here -->
-                </select>
-                <div
-                  *ngIf="userregister.get('userstate')?.hasError('required') && userregister.get('userstate')?.touched"
+                <input type="text" class="form-control" formControlName="userstate" placeholder="Enter your state">
+                <div *ngIf="userregister.get('userstate')?.hasError('required') && userregister.get('userstate')?.touched"
                   class="text-danger">State is required.
                 </div>
               </div>
+              
               <div class="form-group">
                 <label for="usercity">City:</label>
-                <select class="form-control" formControlName="usercity">
-                  <option value="">Select a city</option>
-                  <option value="usa">United States</option>
-                  <option value="canada">Canada</option>
-                  <option value="uk">United Kingdom</option>
-                  <!-- Add more options here -->
-                </select>
+                <input type="text" class="form-control" formControlName="usercity" placeholder="Enter your city">
                 <div *ngIf="userregister.get('usercity')?.hasError('required') && userregister.get('usercity')?.touched"
                   class="text-danger">City is required.
                 </div>
               </div>
+              
               <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
             </form>
           </div>
