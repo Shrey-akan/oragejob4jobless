@@ -93,26 +93,17 @@ runCarousel() {
 }
 
 companies = [
-  { name: 'Chevron', logo: 'chevron-logo.png' },
-  { name: 'Exxon Mobil', logo: 'exxon-logo.png' },
-  { name: 'Occidental Petroleum', logo: 'occidental-logo.png' },
-  { name: 'BNY Mellon', logo: 'bny-mellon-logo.png' },
-  { name: 'Morgan Stanley', logo: 'morgan-stanley-logo.png' },
-  { name: 'AbbVie', logo: 'abbvie-logo.png' },
-  { name: 'ConocoPhillips', logo: 'conoco-phillips-logo.png' },
-  { name: '3M Company', logo: '3m-logo.png' },
-  { name: 'Eli Lilly and Company', logo: 'eli-lilly-logo.png' },
-  { name: 'Florida Power and Light', logo: 'fpl-logo.png' },
-  { name: 'Goldman Sachs', logo: 'goldman-sachs-logo.png' },
-  { name: 'Adobe', logo: 'adobe-logo.png' },
-  { name: 'Con Edison', logo: 'con-edison-logo.png' },
-  { name: 'PayPal', logo: 'paypal-logo.png' },
-  { name: 'Dominion Energy', logo: 'dominion-energy-logo.png' },
-  { name: 'Valero Energy', logo: 'valero-logo.png' },
-  { name: 'Microsoft', logo: 'microsoft-logo.png' },
-  { name: 'Devon Energy', logo: 'devon-energy-logo.png' },
-  { name: 'Netflix', logo: 'netflix-logo.png' },
-  { name: 'Apple', logo: 'apple-logo.png' }
+  { name: 'Amazon', logo: 'Bestfit1.svg.png' },
+  { name: 'IBM', logo: 'Bestfit6.svg.png' },
+  { name: 'Netflix', logo: 'Bestfit8.png' },
+  { name: 'Genpact', logo: 'Bestfit2logo.svg.png' },
+  { name: 'Alphabet', logo: 'Bestfit3.svg.png' },
+  { name: 'Microsoft', logo: 'Bestfit4.svg.png' },
+  { name: 'Apple', logo: 'Bestfit5logo.png' },
+
+  
+  { name: 'LG', logo: 'LGlogo.png' },
+
   // Add more companies with names and logo file paths here
 ];
 initialDisplayCount = 4;

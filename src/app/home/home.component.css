@@ -108,4 +108,24 @@ img{
   .job-card {
     height: 100%;
   }
-  
+
+/* Add this CSS in your component's stylesheet or global styles */
+/* Add this CSS in your component's stylesheet or global styles */
+.company-card {
+  background: linear-gradient(to bottom, #f0f0f0, #ffffff);
+  padding: 20px;
+  text-align: center; /* Center-align content */
+}
+
+.company-logo {
+  width: 100px;
+  height: auto;
+  display: block;
+  margin: 0 auto; /* Center-align the logo */
+}
+
+.company-name {
+  margin-top: 10px; /* Add spacing above the company name */
+  text-align: center; /* Center-align the company name */
+}
+

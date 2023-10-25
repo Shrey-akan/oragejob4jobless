@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-headerdashboardemp',
@@ -9,7 +10,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HeaderdashboardempComponent implements OnInit {
   showNavbaremp = true;
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private cookie:CookieService) { }
 
   ngOnInit() {
 
@@ -23,26 +24,48 @@ export class HeaderdashboardempComponent implements OnInit {
     });
   }
   logoutEmployer() {
-    // Make an HTTP POST request to your logout endpoint
-    this.http.post('http://localhost:9001/logoutEmployer', null).subscribe(
-      {
-        next: (response: any) => {
-          // Handle the successful logout response, e.g., navigate to a login page
-          console.log('Logout successful', response);
-          alert("Logged Out successful");
-          
-          // Clear employer-related data from local storage
-          localStorage.removeItem('empid');
-          localStorage.removeItem('accessToken');
-          
+    // Retrieve the refresh token from the cookie
+    const refreshToken = this.cookie.get('refreshToken');
+    console.log('Refresh token:', refreshToken);
+  
+    // Ensure refreshToken is not empty
+    if (!refreshToken) {
+      console.log('Refresh token is missing.');
+      return;
+    }
+  
+    // Make the logout request with the refresh token as a request parameter
+    this.http.post('http://localhost:9001/logoutEmployer', null, {
+      params: { refreshToken: refreshToken },
+      responseType: 'text' // Specify the response type as 'text'
+    }).subscribe({
+      next: (response: string) => {
+        console.log('Logout response:', response);
+  
+        // Assuming the response is a simple message like "Logout successful"
+        if (response === 'Logout successful') {
+          // Handle the successful logout response
+          console.log('Logout successful');
+  
+          // Clear cookies
+          this.cookie.delete('emp');
+          this.cookie.delete('accessToken');
+  
+          // Navigate to the employer login page or any other desired route
           this.router.navigate(['/employer']);
-        },
-        error: (err: any) => {
-          // Handle errors if the logout request fails
-          console.error('Logout error', err);
+        } else {
+          // Handle other responses or errors
+          console.log('Logout failed:', response);
         }
+      },
+      error: (error) => {
+        // Handle errors if the logout request fails
+        console.log('Logout error', error);
+        console.log('HTTP Status:', error.status);
+        console.log('Error Message:', error.message);
+        // You can add additional error handling here if needed
       }
-    );
+    });
   }
   
 }

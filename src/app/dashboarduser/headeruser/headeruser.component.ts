@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-headeruser',
@@ -12,7 +13,7 @@ export class HeaderuserComponent implements OnInit {
   accessToken: string | null;
   uid: string | null;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private cookie: CookieService) {
     // Initialize properties from local storage
     this.accessToken = localStorage.getItem('accessToken');
     this.uid = localStorage.getItem('uid');
@@ -25,22 +26,47 @@ export class HeaderuserComponent implements OnInit {
     });
   }
   logout() {
-    // Make an HTTP POST request to your logout endpoint
-    this.http.post('http://localhost:9001/logout', null).subscribe({
-      next: (response: any) => {
-        // Handle the successful logout response, e.g., navigate to a login page
-        console.log('Logout successful', response);
-
-        // Clear the uid and access token from local storage
-        localStorage.removeItem('uid');
-        localStorage.removeItem('accessToken');
-
-        // Navigate to the desired page (e.g., home or login)
-        this.router.navigate(['/']); // Change the route as needed
+    // Retrieve the refresh token from the cookie
+    const refreshToken = this.cookie.get('refreshToken');
+    console.log('Refresh token:', refreshToken);
+  
+    // Ensure refreshToken is not empty
+    if (!refreshToken) {
+      console.log('Refresh token is missing.');
+      return;
+    }
+  
+    // Make the logout request with the refresh token as a request parameter
+    this.http.post('http://localhost:9001/logout', null, {
+      params: { refreshToken: refreshToken },
+      responseType: 'text' // Specify the response type as 'text'
+    }).subscribe({
+      next: (response: string) => {
+        console.log('Logout response:', response);
+        
+        // Assuming the response is a simple message like "Logout successful"
+        if (response === 'Logout successful') {
+          // Handle the successful logout response
+          console.log('Logout successful');
+          
+          // Clear cookies
+          this.cookie.delete('uid');
+          this.cookie.delete('accessToken');
+          this.cookie.delete('refreshToken');
+          alert("LogOut Successfull");
+          // Navigate to the login page or any other desired route
+          this.router.navigate(['/login']);
+        } else {
+          // Handle other responses or errors
+          console.log('Logout failed:', response);
+        }
       },
       error: (error) => {
         // Handle errors if the logout request fails
         console.log('Logout error', error);
+        console.log('HTTP Status:', error.status);
+        console.log('Error Message:', error.message);
+        // You can add additional error handling here if needed
       }
     });
   }

@@ -40,7 +40,7 @@ export class UpdateprofileComponent implements OnInit {
   userID: String = "0";
 
   ngOnInit() {
-    this.userID = this.cookie.get('user');
+    this.userID = this.cookie.get('uid');
     console.log(this.userID);
     console.log('User ID from cookie:', this.userID);
 

@@ -60,7 +60,7 @@ export class FindjobuComponent {
     let response = this.b1.fetchjobpost();
     response.subscribe((data1: any) => (this.data = data1));
 
-    this.userID = this.cookie.get('user');
+    this.userID = this.cookie.get('uid');
     console.log(this.userID);
     console.log('User ID from cookie:', this.userID);
 

@@ -11,13 +11,16 @@ import { Observable, catchError, switchMap, throwError } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  static accessToken = '';
+  accessToken = '';
   refresh = false;
+  static accessToken: any;
 
   constructor(private http: HttpClient) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log('Intercepting request...');
+    console.log('Access Token:', AuthInterceptor.accessToken);
     const req = request.clone({
       setHeaders: {
         Authorization: `Bearer ${AuthInterceptor.accessToken}`
@@ -29,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.refresh = true;
 
         // Make a request to refresh the access token
-        return this.http.post('http://localhost:9001/api/refresh', {}, { withCredentials: true }).pipe(
+        return this.http.post('http://localhost:9001/refresh', {}, { withCredentials: true }).pipe(
           switchMap((res: any) => {
             AuthInterceptor.accessToken = res.accessToken;
 

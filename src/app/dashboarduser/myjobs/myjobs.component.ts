@@ -24,7 +24,7 @@ export class MyjobsComponent implements OnInit{
   userID: String = "0";
   ngOnInit(): void {
     // Check if the userID is correctly retrieved from the cookie
-    this.userID = this.cookie.get('user');
+    this.userID = this.cookie.get('uid');
     console.log(this.userID);
     console.log('User ID from cookie:', this.userID);
   

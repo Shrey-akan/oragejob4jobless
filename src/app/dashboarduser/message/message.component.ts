@@ -32,7 +32,7 @@ export class MessageComponent implements OnInit {
   constructor(private http: HttpClient,private  router:Router, public cookie: CookieService, private b1: UserService) { }
 
   ngOnInit(): void {
-    this.userID = this.cookie.get('user');
+    this.userID = this.cookie.get('uid');
 
     let response = this.b1.fetchuser();
 

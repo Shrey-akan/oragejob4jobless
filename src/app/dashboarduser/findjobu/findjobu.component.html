@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-md-6 ">
                     <div class="custom-box clickable" style="margin: 10px 0px; border-radius: 20px;"
-                        *ngFor="let job of data" (click)="selectJob(job)">
+                        *ngFor="let job of filteredJobs" (click)="selectJob(job)">
                         <h2>{{ job.jobtitle }}</h2>
                         <h3>{{ job.companyforthisjob }}</h3>
                         <!-- Display other relevant job information here -->

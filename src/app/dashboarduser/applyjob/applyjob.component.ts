@@ -25,7 +25,7 @@ export class ApplyjobComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.uid = this.cookie.get('user');
+    this.uid = this.cookie.get('uid');
    
     console.log("checking the uid of the user",this.uid);
     // let responce = this.b1.empaccregrepo();

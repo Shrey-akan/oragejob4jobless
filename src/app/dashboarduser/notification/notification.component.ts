@@ -16,7 +16,7 @@ export class NotificationComponent implements OnInit {
   userID: string = "0";
 
   ngOnInit(): void {
-    this.userID = this.cookie.get('user');
+    this.userID = this.cookie.get('uid');
     console.log(this.userID);
     console.log('User ID from cookie:', this.userID);
     this.fetchNotifications();

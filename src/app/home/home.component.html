@@ -75,7 +75,7 @@
             <div class="card mb-4 job-card">
                 <img src="assets/logojob.png" alt="Personalized Jobs Logo" class="card-img-top">
                 <div class="card-body d-flex flex-column">
-                    <h2 class="card-title">Jobs Recommendation</h2>
+                    <h2 class="card-title"></h2>
                     <p class="card-text flex-grow-1">Get job recommendations that resonate with your career goals, aspirations, background, and experience.</p>
                 </div>
             </div>
@@ -151,25 +151,47 @@
 
 
   <div class="container text-center" style="margin: 50px auto;">
+  <h2>Best Companies to Work For</h2>
+  <div class="row">
+    <ng-container *ngFor="let company of companies.slice(0, showMore ? companies.length : initialDisplayCount); let i = index">
+      <div class="col-md-3">
+        <div class="company-card">
+          <img class="company-logo" [src]="'assets/' + company.logo" alt="No image found">
+          <p>{{ company.name }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="text-center">
+    <button (click)="toggleShowMore()" class="btn btn-primary">
+      {{ showMore ? 'Show Less' : 'Show More' }}
+    </button>
+  </div>
+</div>
+
+
+
+  <!-- <div class="container text-center" style="margin: 50px auto;">
     <h2>Best Companies to Work For</h2>
     <div class="row">
       <ng-container *ngFor="let company of companies.slice(0, showMore ? companies.length : initialDisplayCount); let i = index">
         <div class="col-md-3">
           <div class="company-card">
-            <img src="assets/logojob.png" alt="">
+            <img [src]="'assets/' + company.logo" alt="No image found">
             <p>{{ company.name }}</p>
           </div>
         </div>
       </ng-container>
     </div>
     <div class="text-center">
+      <button (click)="toggleShowMore()" class="btn btn-primary">
+        {{ showMore ? 'Show Less' : 'Show More' }}
+      </button>
+    </div>
+  </div> -->
+  
 
-   
-    <button (click)="toggleShowMore()" class="btn btn-primary">
-      {{ showMore ? 'Show Less' : 'Show More' }}
-    </button>
-  </div>
-  </div>
+
   
 
 
