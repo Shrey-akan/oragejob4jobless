@@ -9,16 +9,17 @@
                             <div class="row">
                                 <div class="col-md-6 offset-md-3">
                                     <a routerLink="/finjobpage">
-                                        <div class="input-group">
-                                            <input type="text" id="findjob" name="findjob" class="form-control"
+                                        <div class="input-group rounded">
+                                            <input type="text" id="findjob" name="findjob" class="form-control rounded"
                                                 placeholder="What job title, keywords or company"
-                                                [(ngModel)]="searchQuery">
+                                                [(ngModel)]="searchQuery" />
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">Search</button>
+                                                <button class="btn btn-primary rounded" type="button">Search</button>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -154,14 +155,14 @@
     </div>
     <div class="pagination">
         <button class="btn btn-primary" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
-          Previous
+            Previous
         </button>
         <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
         <button class="btn btn-primary" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
-          Next
+            Next
         </button>
-      </div>
-      
+    </div>
+
 </div>
 
 

@@ -34,7 +34,7 @@ export class ResetpasswordemployerComponent implements OnInit{
 
       const formData = this.passwordResetForm.value;
       // Make a POST request to your backend for password reset
-      this.http.post('http://localhost:9001/resetPasswordEmpverify', formData)
+      this.http.post('https://job4jobless.com:9001/resetPasswordEmpverify', formData)
         .subscribe(
           {
             next: (response: any) => {

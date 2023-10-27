@@ -37,7 +37,7 @@ export class UpdatejobComponent implements OnInit {
   updateJob() {
     const formData = this.jobForm.value;
 
-    this.http.put(`http://localhost:9001/jobpostupdate/${this.jobid}`, formData)
+    this.http.put(`https://job4jobless.com:9001/jobpostupdate/${this.jobid}`, formData)
       .subscribe(
        {
         next: (response:any) => {

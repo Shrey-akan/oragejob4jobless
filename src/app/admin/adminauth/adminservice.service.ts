@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AdminserviceService {
 
-  private apiUrl = 'http://localhost:9001/';
+  private apiUrl = 'https://job4jobless.com:9001/';
 
   constructor(private http: HttpClient) {}
 

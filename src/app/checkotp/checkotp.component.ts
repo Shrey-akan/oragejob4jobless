@@ -63,7 +63,7 @@ export class CheckotpComponent implements OnInit {
 
 
   updateUserificationStatus(userName:string):void{
-    this.http.post('http://localhost:9001/verifyUser', { userName:userName })
+    this.http.post('https://job4jobless.com:9001/verifyUser', { userName:userName })
     .subscribe({
         next: (response: any) => {
             console.log("User verified successfully");

@@ -30,3 +30,12 @@
   color: #fff;
   /* Add more dark mode styles here */
 }
+.scrollable-content {
+  max-height: 500px; /* Set your desired max height */
+  overflow: auto;
+}
+
+.scrollable-content::-webkit-scrollbar {
+  width: 0;
+  background: transparent; /* Hide scrollbar in webkit browsers */
+}

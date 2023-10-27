@@ -35,7 +35,12 @@ import { MatListModule } from '@angular/material/list';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { FinjobpageComponent } from './finjobpage/finjobpage.component';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
+
+import { MessagingService } from './firebase/messaging.service';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +67,8 @@ import { FinjobpageComponent } from './finjobpage/finjobpage.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     HttpClientModule,
@@ -74,11 +81,13 @@ import { FinjobpageComponent } from './finjobpage/finjobpage.component';
     MatSelectModule
     // NgbModule
   ],
-  providers: [CookieService,{
+  providers: [CookieService,MessagingService,{
     provide:HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi:true
   }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
+
 export class AppModule { }

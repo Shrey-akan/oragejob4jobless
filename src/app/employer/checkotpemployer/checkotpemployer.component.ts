@@ -53,7 +53,7 @@ export class CheckotpemployerComponent implements OnInit {
 
 
   updateEmployerVerificationStatus(empmailid: string): void {
-    this.http.post('http://localhost:9001/verifyEmployer', { empmailid : empmailid })
+    this.http.post('https://job4jobless.com:9001/verifyEmployer', { empmailid : empmailid })
         .subscribe({
             next: (response: any) => {
                 console.log("Employer verified successfully");
