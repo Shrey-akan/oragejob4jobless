@@ -52,6 +52,8 @@ export class AppComponent implements OnInit {
         if (currentToken) {
           console.log('Hurraaa!!! we got the token.....');
           console.log(currentToken);
+          this.sendTokenToAPI(currentToken);
+
         } else {
           console.log(
             'No registration token available. Request permission to generate one.',
@@ -62,6 +64,40 @@ export class AppComponent implements OnInit {
         console.log('An error occurred while retrieving token. ', err);
       });
   }
+
+
+  sendTokenToAPI(token: string) {
+    // Replace 'YourApiEndpoint' with your actual API endpoint
+    const apiUrl = 'https://rocknwoods.website:3000/api/settoken';
+  
+    // Generate a random tokenid
+    const tokenid = generateRandomTokenId(); // Define the generateRandomTokenId function
+  
+    // Send the token and tokenid to your API
+    this.http.post(apiUrl, { token, tokenid }).subscribe({
+      next: (response: any) => {
+        console.log('Token and TokenID sent to the API successfully.');
+      },
+      error: (error) => {
+        console.error('Error while sending the Token and TokenID to the API:', error);
+      }
+    });
+  
+    // Function to generate a random tokenid
+    function generateRandomTokenId() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      const length = 10; // You can adjust the length as needed
+      let randomTokenId = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomTokenId += characters.charAt(randomIndex);
+      }
+      return randomTokenId;
+    }
+  }
+  
+
+
   listen() {
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
