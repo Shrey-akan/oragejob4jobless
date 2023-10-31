@@ -33,3 +33,37 @@
     font-size: 16px;
     font-weight: bold;
   }
+
+  .bold-text {
+    font-weight: bold;
+  }
+  .social-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .social-list li {
+    display: inline-block;
+    margin: 0 10px; /* Adjust margin as needed */
+    text-align: center;
+  }
+  
+  .social-list a {
+    text-decoration: none;
+    display: block;
+    color: #333; /* Adjust text color as needed */
+  }
+  
+  .social-list i {
+    font-size: 24px; /* Adjust icon size as needed */
+  }
+  
+  .social-list h3 {
+    margin: 0;
+    font-weight: bold;
+    font-size: 16px; /* Adjust text size as needed */
+  }
+  .text-justify{
+    text-align: justify;
+  }
+  

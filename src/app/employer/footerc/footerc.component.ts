@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class FootercComponent {
   sendWhatsAppMessage() {
       // Replace '123456789' with the recipient's phone number
-      const phoneNumber = '123456789';
+      const phoneNumber = '9958360795';
   
       // Replace 'Hello, how can I help you?' with your desired message
       

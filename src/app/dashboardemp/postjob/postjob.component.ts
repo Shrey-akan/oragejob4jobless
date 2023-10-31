@@ -35,8 +35,8 @@ export class PostjobComponent implements OnInit {
       locationjob: [''],
       jobtype: [''],
       schedulejob: this.formbuilder.array([]), // For checkboxes
-      payjob: ['', Validators.required],
-      payjobsup: ['', Validators.required],
+      payjob: [''],
+      payjobsup: [''],
       descriptiondata: [''],
       empid: ['', Validators.required],
     });
