@@ -5,13 +5,14 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MessagingService } from './firebase/messaging.service';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient, private cookie: CookieService , private messagingservice:MessagingService) { 
+  constructor(private http: HttpClient,private router:Router, private cookie: CookieService , private messagingservice:MessagingService) { 
     
   }
   title = 'jobax';
@@ -31,12 +32,17 @@ export class AppComponent implements OnInit {
             const accessToken = response.accessToken;
             AuthInterceptor.accessToken = accessToken;
             this.cookie.set('accessToken', accessToken);
+
+            // Redirect the user based on their role (user or employer)
+            this.redirectToDashboard(response.role, response.uid, response.empid);
+
           }
         },
         error:(error) => {
-          // Handle the error here
-          console.error('Error while refreshing the token:', error);
-          // You can also display an error message to the user if needed
+         // Handle the error here (e.g., redirect to login)
+         console.error('Error while refreshing the token:', error);
+         // Redirect to the login page or display an error message
+         this.router.navigate(['/login']);
         }
        }
       );
@@ -45,6 +51,16 @@ export class AppComponent implements OnInit {
     this.requestPermission();
     this.listen();
   }
+  redirectToDashboard(role: string, uid: string, empid: string) {
+    if (role === 'user') {
+      this.cookie.set('uid', uid); // Set the uid cookie for users
+      this.router.navigate(['/dashboarduser']);
+    } else if (role === 'employer') {
+      this.cookie.set('emp', empid); // Set the emp cookie for employers
+      this.router.navigate(['/dashboardemp']);
+    }
+  }
+  
   requestPermission() {
     const messaging = getMessaging();
     getToken(messaging, { vapidKey: environment.firebase.vapidKey })
