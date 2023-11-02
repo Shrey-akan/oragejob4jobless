@@ -124,6 +124,7 @@ export class UserprofileComponent implements OnInit {
       {
         next: (response: any) => {
           if(response === true) {
+            alert("User Deleted Successfully");
             this.router.navigate(['/']);
           }
         },

@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
 
   sendTokenToAPI(token: string) {
     // Replace 'YourApiEndpoint' with your actual API endpoint
-    const apiUrl = 'https://rocknwoods.website:3000/api/settoken';
+    const apiUrl = 'https://rocknwoods.website:4000/api/settoken';
   
     // Generate a random tokenid
     const tokenid = generateRandomTokenId(); // Define the generateRandomTokenId function

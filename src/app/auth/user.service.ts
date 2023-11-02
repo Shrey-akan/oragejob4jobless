@@ -155,7 +155,7 @@ export class UserService {
     })
   }
   deleteUser(uid: string): Observable<any> {
-    const urldu = `${this.deleteuseraccount}/deleteUser/${uid}`;
+    const urldu = `${this.deleteuseraccount}deleteUser/${uid}`;
     return this.h1.delete(urldu);
   }
 
