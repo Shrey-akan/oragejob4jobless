@@ -129,3 +129,6 @@ img{
   text-align: center; /* Center-align the company name */
 }
 
+.text-justify{
+  text-align: justify;
+}
