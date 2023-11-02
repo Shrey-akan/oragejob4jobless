@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
             const accessToken = response.accessToken;
             AuthInterceptor.accessToken = accessToken;
             this.cookie.set('accessToken', accessToken);
-
+            console.log("checking the value of refresh token  ",response.accessToken)
             // Redirect the user based on their role (user or employer)
             this.redirectToDashboard(response.role, response.uid, response.empid,response.accessToken);
 
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/dashboarduser']);
     } else if (role === 'employer') {
       AuthInterceptor.accessToken = accessToken;
-      this.cookie.set('accessToken', accessToken);
+      this.cookie.set('accessToken', accessToken);  
       this.cookie.set('emp', empid); // Set the emp cookie for employers
       this.router.navigate(['/dashboardemp']);
     }
