@@ -29,12 +29,13 @@ export class AppComponent implements OnInit {
        {
         next:(response: any) => {
           if (response.accessToken) {
+            console.log(response.accessToken);
             const accessToken = response.accessToken;
             AuthInterceptor.accessToken = accessToken;
             this.cookie.set('accessToken', accessToken);
 
             // Redirect the user based on their role (user or employer)
-            this.redirectToDashboard(response.role, response.uid, response.empid);
+            this.redirectToDashboard(response.role, response.uid, response.empid,response.accessToken);
 
           }
         },
@@ -51,11 +52,15 @@ export class AppComponent implements OnInit {
     this.requestPermission();
     this.listen();
   }
-  redirectToDashboard(role: string, uid: string, empid: string) {
+  redirectToDashboard(role: string, uid: string, empid: string,accessToken:string) {
     if (role === 'user') {
+      AuthInterceptor.accessToken = accessToken;
+      this.cookie.set('accessToken', accessToken);
       this.cookie.set('uid', uid); // Set the uid cookie for users
       this.router.navigate(['/dashboarduser']);
     } else if (role === 'employer') {
+      AuthInterceptor.accessToken = accessToken;
+      this.cookie.set('accessToken', accessToken);
       this.cookie.set('emp', empid); // Set the emp cookie for employers
       this.router.navigate(['/dashboardemp']);
     }
